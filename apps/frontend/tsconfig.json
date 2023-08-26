@@ -1,0 +1,26 @@
+{
+	"extends": "@wrkplay/configs/ts/base.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+
+		"target": "ESNext",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"declaration": false,
+		"declarationMap": false,
+
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"noEmit": true,
+		"jsx": "react-jsx"
+	},
+
+	"noEmit": true,
+	"include": ["src", ".eslintrc.cjs", "vite.config.ts", "postcss.config.cjs", "tailwind.config.ts"],
+	"references": [{ "path": "./tsconfig.node.json" }]
+}

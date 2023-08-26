@@ -1,0 +1,22 @@
+{
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"start": "turbo run start",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"setup-local": "docker compose up -d && turbo run setup-local"
+	},
+	"devDependencies": {
+		"@flydotio/dockerfile": "^0.4.8",
+		"@turbo/gen": "^1.9.7",
+		"eslint": "^8.42.0",
+		"eslint-config-custom": "workspace:*",
+		"prettier": "^3.0.0",
+		"turbo": "^1.10.7",
+		"typescript": "5.0.4"
+	},
+	"packageManager": "pnpm@7.15.0",
+	"name": "wrkplay-monorepo"
+}

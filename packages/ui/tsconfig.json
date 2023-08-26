@@ -1,0 +1,5 @@
+{
+	"extends": "@wrkplay/configs/ts/react-library.json",
+	"include": ["."],
+	"exclude": ["dist", "build", "node_modules"]
+}

@@ -1,0 +1,9 @@
+{
+	"name": "@wrkplay/font-tools",
+	"version": "0.0.0",
+	"scripts": {
+		"convert": "sh subset-and-convert.sh"
+	},
+	"dependencies": {},
+	"private": true
+}
