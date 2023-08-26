@@ -35,6 +35,9 @@ model User {
   name        String
   role        UserRole          @default(GUEST)
   permissions VenuePermission[]
+
+  sideAMatches Match[] @relation("SideA")
+  sideBMatches Match[] @relation("SideB")
 }
 
 enum Permission {
@@ -63,4 +66,47 @@ model Venue {
 
   permissions VenuePermission[]
   name        String
+
+  pitches Pitch[]
+}
+
+model Pitch {
+  id        String   @id @default(dbgenerated("nanoid(6)")) @db.VarChar(6)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  minTeamSize Int @default(1)
+  maxTeamSize Int @default(1)
+
+  venueId String
+  venue   Venue  @relation(fields: [venueId], references: [id])
+
+  name    String
+  matches Match[]
+}
+
+enum MatchStatus {
+  // Can can only modify sideA and sideB
+  NOT_STARTED
+  // Can only modify sideAScore and sideBScore
+  STARTED
+  // Can no longer modify
+  FINISHED
+}
+
+model Match {
+  id        String   @id @default(dbgenerated("uuid7()")) @db.VarChar(36)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  status MatchStatus @default(NOT_STARTED)
+
+  pitchId String
+  pitch   Pitch  @relation(fields: [pitchId], references: [id])
+
+  sideA User[] @relation("SideA")
+  sideB User[] @relation("SideB")
+
+  sideAScore Int @default(0)
+  sideBScore Int @default(0)
 }
