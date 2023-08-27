@@ -13,12 +13,13 @@ const config: Config = {
 			},
 		},
 		fontFamily: {
-			body: ['Manrope Variable', 'sans-serif'],
-			display: ['Manrope Variable', 'sans-serif'],
+			body: ['GT Walsheim Pro', 'sans-serif'],
+			display: ['GT Walsheim Pro', 'sans-serif'],
 		},
 		fontWeight: {
-			medium: '500',
-			semibold: '600',
+			regular: '400',
+			medium: '600',
+			bold: '700',
 		},
 		letterSpacing: {
 			tighter: '-0.03em',
@@ -37,7 +38,7 @@ const config: Config = {
 				subtle: {
 					neutral: 'hsl(var(--mauve-2) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-2) / <alpha-value>)',
-					primary: 'hsl(var(--purple-2) / <alpha-value>)',
+					primary: 'hsl(var(--amber-2) / <alpha-value>)',
 					positive: 'hsl(var(--teal-2) / <alpha-value>)',
 					warning: 'hsl(var(--amber-2) / <alpha-value>)',
 					negative: 'hsl(var(--red-2) / <alpha-value>)',
@@ -45,7 +46,7 @@ const config: Config = {
 				strong: {
 					neutral: 'hsl(var(--mauve-9) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-9) / <alpha-value>)',
-					primary: 'hsl(var(--purple-9) / <alpha-value>)',
+					primary: 'hsl(var(--amber-9) / <alpha-value>)',
 					positive: 'hsl(var(--teal-9) / <alpha-value>)',
 					warning: 'hsl(var(--amber-9) / <alpha-value>)',
 					negative: 'hsl(var(--red-9) / <alpha-value>)',
@@ -54,20 +55,20 @@ const config: Config = {
 			interactive: {
 				element: {
 					neutral: 'hsl(var(--mauve-3) / <alpha-value>)',
-					primary: 'hsl(var(--purple-3) / <alpha-value>)',
+					primary: 'hsl(var(--amber-3) / <alpha-value>)',
 					positive: 'hsl(var(--teal-3) / <alpha-value>)',
 					warning: 'hsl(var(--amber-3) / <alpha-value>)',
 					negative: 'hsl(var(--red-3) / <alpha-value>)',
 					hover: {
 						neutral: 'hsl(var(--mauve-4) / <alpha-value>)',
-						primary: 'hsl(var(--purple-4) / <alpha-value>)',
+						primary: 'hsl(var(--amber-4) / <alpha-value>)',
 						positive: 'hsl(var(--teal-4) / <alpha-value>)',
 						warning: 'hsl(var(--amber-4) / <alpha-value>)',
 						negative: 'hsl(var(--red-4) / <alpha-value>)',
 					},
 					active: {
 						neutral: 'hsl(var(--mauve-5) / <alpha-value>)',
-						primary: 'hsl(var(--purple-5) / <alpha-value>)',
+						primary: 'hsl(var(--amber-5) / <alpha-value>)',
 						positive: 'hsl(var(--teal-5) / <alpha-value>)',
 						warning: 'hsl(var(--amber-5) / <alpha-value>)',
 						negative: 'hsl(var(--red-5) / <alpha-value>)',
@@ -75,20 +76,20 @@ const config: Config = {
 				},
 				solid: {
 					neutral: 'hsl(var(--mauve-9) / <alpha-value>)',
-					primary: 'hsl(var(--purple-9) / <alpha-value>)',
+					primary: 'hsl(var(--amber-9) / <alpha-value>)',
 					positive: 'hsl(var(--teal-9) / <alpha-value>)',
 					warning: 'hsl(var(--amber-9) / <alpha-value>)',
 					negative: 'hsl(var(--red-9) / <alpha-value>)',
 					hover: {
 						neutral: 'hsl(var(--mauve-10) / <alpha-value>)',
-						primary: 'hsl(var(--purple-10) / <alpha-value>)',
+						primary: 'hsl(var(--amber-10) / <alpha-value>)',
 						positive: 'hsl(var(--teal-10) / <alpha-value>)',
 						warning: 'hsl(var(--amber-10) / <alpha-value>)',
 						negative: 'hsl(var(--red-10) / <alpha-value>)',
 					},
 					active: {
 						neutral: 'hsl(var(--mauve-11) / <alpha-value>)',
-						primary: 'hsl(var(--purple-11) / <alpha-value>)',
+						primary: 'hsl(var(--amber-11) / <alpha-value>)',
 						positive: 'hsl(var(--teal-11) / <alpha-value>)',
 						warning: 'hsl(var(--amber-11) / <alpha-value>)',
 						negative: 'hsl(var(--red-11) / <alpha-value>)',
@@ -98,20 +99,20 @@ const config: Config = {
 			border: {
 				subtle: {
 					neutral: 'hsl(var(--mauve-6) / <alpha-value>)',
-					primary: 'hsl(var(--purple-6) / <alpha-value>)',
+					primary: 'hsl(var(--amber-6) / <alpha-value>)',
 					positive: 'hsl(var(--teal-6) / <alpha-value>)',
 					warning: 'hsl(var(--amber-6) / <alpha-value>)',
 					negative: 'hsl(var(--red-6) / <alpha-value>)',
 				},
 				element: {
 					neutral: 'hsl(var(--mauve-7) / <alpha-value>)',
-					primary: 'hsl(var(--purple-7) / <alpha-value>)',
+					primary: 'hsl(var(--amber-7) / <alpha-value>)',
 					positive: 'hsl(var(--teal-7) / <alpha-value>)',
 					warning: 'hsl(var(--amber-7) / <alpha-value>)',
 					negative: 'hsl(var(--red-7) / <alpha-value>)',
 					hover: {
 						neutral: 'hsl(var(--mauve-8) / <alpha-value>)',
-						primary: 'hsl(var(--purple-8) / <alpha-value>)',
+						primary: 'hsl(var(--amber-8) / <alpha-value>)',
 						positive: 'hsl(var(--teal-8) / <alpha-value>)',
 						warning: 'hsl(var(--amber-8) / <alpha-value>)',
 						negative: 'hsl(var(--red-8) / <alpha-value>)',
@@ -124,7 +125,7 @@ const config: Config = {
 				lowcontrast: {
 					neutral: 'hsl(var(--mauve-11) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-11) / <alpha-value>)',
-					primary: 'hsl(var(--purple-11) / <alpha-value>)',
+					primary: 'hsl(var(--amber-11) / <alpha-value>)',
 					positive: 'hsl(var(--teal-11) / <alpha-value>)',
 					warning: 'hsl(var(--amber-11) / <alpha-value>)',
 					negative: 'hsl(var(--red-11) / <alpha-value>)',
@@ -132,7 +133,7 @@ const config: Config = {
 				highcontrast: {
 					neutral: 'hsl(var(--mauve-12) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-12) / <alpha-value>)',
-					primary: 'hsl(var(--purple-12) / <alpha-value>)',
+					primary: 'hsl(var(--amber-12) / <alpha-value>)',
 					positive: 'hsl(var(--teal-12) / <alpha-value>)',
 					warning: 'hsl(var(--amber-12) / <alpha-value>)',
 					negative: 'hsl(var(--red-12) / <alpha-value>)',
@@ -143,7 +144,7 @@ const config: Config = {
 				lowContrast: {
 					neutral: 'hsl(var(--mauve-10) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-10) / <alpha-value>)',
-					primary: 'hsl(var(--purple-10) / <alpha-value>)',
+					primary: 'hsl(var(--amber-10) / <alpha-value>)',
 					positive: 'hsl(var(--teal-10) / <alpha-value>)',
 					warning: 'hsl(var(--amber-10) / <alpha-value>)',
 					negative: 'hsl(var(--red-10) / <alpha-value>)',
@@ -151,7 +152,7 @@ const config: Config = {
 				highContrast: {
 					neutral: 'hsl(var(--mauve-12) / <alpha-value>)',
 					neutralA: 'hsl(var(--alpha-12) / <alpha-value>)',
-					primary: 'hsl(var(--purple-12) / <alpha-value>)',
+					primary: 'hsl(var(--amber-12) / <alpha-value>)',
 					positive: 'hsl(var(--teal-12) / <alpha-value>)',
 					warning: 'hsl(var(--amber-12) / <alpha-value>)',
 					negative: 'hsl(var(--red-12) / <alpha-value>)',

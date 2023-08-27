@@ -2,8 +2,7 @@ export { Button } from './button/button';
 export type { ButtonProps } from './button/button';
 
 export { Badge } from './badge/badge';
-
-export { Logo } from './logo/logo';
+export type { BadgeProps } from './badge/badge';
 
 export { AnimatedText } from './animated-text/animated-text';
 

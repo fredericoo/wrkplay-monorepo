@@ -36,8 +36,7 @@ model User {
   role        UserRole          @default(GUEST)
   permissions VenuePermission[]
 
-  sideAMatches Match[] @relation("SideA")
-  sideBMatches Match[] @relation("SideB")
+  plays MatchPlayer[]
 }
 
 enum Permission {
@@ -51,7 +50,7 @@ model VenuePermission {
   updatedAt DateTime @default(now()) @updatedAt
 
   user  User  @relation(fields: [userId], references: [id])
-  venue Venue @relation(fields: [venueId], references: [id])
+  venue Venue @relation(fields: [venueId], references: [id], onDelete: Cascade)
 
   role    Permission @default(VIEW)
   venueId String
@@ -79,10 +78,12 @@ model Pitch {
   maxTeamSize Int @default(1)
 
   venueId String
-  venue   Venue  @relation(fields: [venueId], references: [id])
+  venue   Venue  @relation(fields: [venueId], references: [id], onDelete: Cascade)
 
   name    String
   matches Match[]
+
+  joinTags JoinTag[]
 }
 
 enum MatchStatus {
@@ -94,6 +95,11 @@ enum MatchStatus {
   FINISHED
 }
 
+enum MatchSide {
+  SIDE_A
+  SIDE_B
+}
+
 model Match {
   id        String   @id @default(dbgenerated("uuid7()")) @db.VarChar(36)
   createdAt DateTime @default(now())
@@ -102,11 +108,41 @@ model Match {
   status MatchStatus @default(NOT_STARTED)
 
   pitchId String
-  pitch   Pitch  @relation(fields: [pitchId], references: [id])
+  pitch   Pitch  @relation(fields: [pitchId], references: [id], onDelete: Cascade)
 
-  sideA User[] @relation("SideA")
-  sideB User[] @relation("SideB")
+  players MatchPlayer[]
 
   sideAScore Int @default(0)
   sideBScore Int @default(0)
+}
+
+enum MatchPlayerState {
+  NOT_READY
+  READY
+  VOTE_DONE
+  VOTE_FORFEIT
+  VOTE_CANCEL
+}
+
+model MatchPlayer {
+  id        String   @id @default(dbgenerated("uuid7()")) @db.VarChar(36)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  matchId String
+  match   Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  side  MatchSide
+  state MatchPlayerState @default(NOT_READY)
+}
+
+model JoinTag {
+  id String @id @default(dbgenerated("nanoid(6)")) @db.VarChar(6)
+
+  pitchId String
+  pitch   Pitch     @relation(fields: [pitchId], references: [id], onDelete: Cascade)
+  side    MatchSide
 }

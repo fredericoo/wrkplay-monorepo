@@ -1,3 +1,4 @@
+import '@wrkplay/ui/fonts/fonts.css';
 import '@wrkplay/ui/tailwind.css';
 
 import React from 'react';

@@ -18,4 +18,19 @@ export const userRouter = router({
 			select: { id: true, name: true },
 		});
 	}),
+	pendingMatches: authorizedProcedure
+		.input(z.intersection(CursorPaginationSchema.optional(), z.object({ userId: z.string() })))
+		.query(async ({ input }) => {
+			const pagination = getCursorPagination(input);
+
+			return await db.match.findMany({
+				...pagination,
+				where: { status: { in: ['NOT_STARTED', 'STARTED'] }, players: { some: { userId: input.userId } } },
+				select: {
+					id: true,
+					pitch: { select: { name: true, venue: { select: { name: true } } } },
+					createdAt: true,
+				},
+			});
+		}),
 });

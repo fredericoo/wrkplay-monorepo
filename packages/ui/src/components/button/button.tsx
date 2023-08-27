@@ -17,9 +17,11 @@ export const buttonVariants = cva(
 				primary: `bg-interactive-solid-primary text-copy-inverted 
 				 duration-300 ease-expo-out hover:scale-hover
 				hover:bg-interactive-solid-hover-primary active:scale-active active:bg-interactive-solid-active-primary active:text-copy-inverted/90`,
-				secondary: `focus-visible:ring-interactive-element-focus-primary bg-interactive-element-primary
-				text-copy-highcontrast-primary hover:bg-interactive-element-hover-primary 
-				focus-visible:ring-2 active:bg-interactive-element-active-primary`,
+				positive: `bg-interactive-solid-positive text-copy-inverted 
+				duration-300 ease-expo-out hover:scale-hover
+			   hover:bg-interactive-solid-hover-positive active:scale-active active:bg-interactive-solid-active-positive active:text-copy-inverted/90`,
+				secondary: `bg-interactive-element-neutral text-copy-highcontrast-neutral hover:scale-hover
+				hover:bg-interactive-element-hover-neutral active:scale-active active:bg-interactive-element-active-neutral`,
 				ghost:
 					'hover:bg-interactive-element-hover-neutral active:scale-active active:bg-interactive-element-active-neutral',
 				unstyled: '',

@@ -1,14 +1,48 @@
-import { CursorPaginationSchema } from '@wrkplay/core';
+import { CursorPaginationSchema, MatchError } from '@wrkplay/core';
+import { match, P } from 'ts-pattern';
 import { z } from 'zod';
 
 import { authorizedProcedure } from '../domains/auth/auth.middleware';
 import { getCursorPagination } from '../domains/common/common.utils';
 import { db } from '../domains/db/db.client';
 import { getErrorCode, getErrorMessage } from '../domains/error/error.utils';
-import { findPendingMatch, isUserInMatch, MatchError } from '../domains/match/match.utils';
+import { findPendingMatch } from '../domains/match/match.utils';
 import { router } from '../trpc';
 
 export const matchRouter = router({
+	getById: authorizedProcedure.input(z.object({ matchId: z.string() })).query(async ({ input }) => {
+		const match = await db.match
+			.findUniqueOrThrow({
+				where: { id: input.matchId },
+				select: {
+					id: true,
+					status: true,
+					createdAt: true,
+					sideAScore: true,
+					sideBScore: true,
+					players: {
+						select: {
+							id: true,
+							user: {
+								select: {
+									id: true,
+									name: true,
+								},
+							},
+							side: true,
+							state: true,
+						},
+					},
+					pitch: { select: { id: true, name: true, venue: { select: { id: true, name: true } } } },
+				},
+			})
+			.catch(error => {
+				console.error(error);
+				throw new MatchError({ code: 'NOT_FOUND' });
+			});
+
+		return { match };
+	}),
 	list: authorizedProcedure.input(CursorPaginationSchema.optional()).query(async ({ input }) => {
 		const pagination = getCursorPagination(input);
 		return await db.match.findMany({
@@ -19,8 +53,18 @@ export const matchRouter = router({
 				createdAt: true,
 				sideAScore: true,
 				sideBScore: true,
-				sideA: { select: { id: true, name: true } },
-				sideB: { select: { id: true, name: true } },
+				players: {
+					select: {
+						id: true,
+						user: {
+							select: {
+								name: true,
+							},
+						},
+						side: true,
+						state: true,
+					},
+				},
 				pitch: { select: { id: true, name: true, venue: { select: { id: true, name: true } } } },
 			},
 			...pagination,
@@ -33,8 +77,17 @@ export const matchRouter = router({
 				select: {
 					id: true,
 					status: true,
-					sideA: { select: { id: true, name: true } },
-					sideB: { select: { id: true, name: true } },
+					players: {
+						select: {
+							user: {
+								select: {
+									name: true,
+								},
+							},
+							side: true,
+							state: true,
+						},
+					},
 				},
 			})
 			.catch(error => {
@@ -45,68 +98,149 @@ export const matchRouter = router({
 		return { currentMatch };
 	}),
 	/** Currently authed user joins match on selected side, or creates it */
-	join: authorizedProcedure
-		.input(z.object({ pitchId: z.string(), side: z.enum(['sideA', 'sideB']) }))
-		.mutation(async ({ input, ctx }) => {
-			try {
-				const existingMatch = await findPendingMatch(input);
-
-				if (!existingMatch) {
-					const created = await db.match
-						.create({
-							data: {
-								pitch: { connect: { id: input.pitchId } },
-								[input.side]: { connect: { id: ctx.session.user.id } },
-							},
-							select: { id: true },
-						})
-						.catch(error => {
-							console.error(error);
-							throw new MatchError({ code: 'NOT_FOUND' });
-						});
-
-					return { success: true, matchId: created.id };
-				}
-
-				if (existingMatch.status === 'STARTED') throw new MatchError({ code: 'ONGOING_MATCH' });
-
-				const isPlayerInMatch = isUserInMatch({ match: existingMatch, user: ctx.session.user });
-				if (isPlayerInMatch) throw new MatchError({ code: 'ALREADY_JOINED' });
-
-				const isSideFull = existingMatch[input.side].length >= existingMatch.pitch.maxTeamSize;
-				if (isSideFull) throw new MatchError({ code: 'SIDE_FULL' });
-
-				const updated = await db.match.update({
-					where: { id: existingMatch.id },
-					data: { [input.side]: { connect: { id: ctx.session.user.id } } },
-					select: { id: true },
-				});
-				return { success: true, matchId: updated.id };
-			} catch (error) {
-				return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
-			}
-		}),
-	start: authorizedProcedure.input(z.object({ pitchId: z.string() })).mutation(async ({ input, ctx }) => {
+	join: authorizedProcedure.input(z.object({ joinTag: z.string() })).mutation(async ({ input, ctx }) => {
 		try {
-			const existingMatch = await findPendingMatch(input);
-			if (!existingMatch) throw new MatchError({ code: 'NOT_FOUND' });
+			const { pitchId, side } = await db.joinTag
+				.findUniqueOrThrow({ where: { id: input.joinTag }, select: { pitchId: true, side: true } })
+				.catch(error => {
+					console.error(error);
+					throw new MatchError({ code: 'INVALID_TAG' });
+				});
+
+			const existingMatch = await findPendingMatch({ pitchId });
+
+			if (!existingMatch) {
+				const created = await db.match
+					.create({
+						data: {
+							pitch: { connect: { id: pitchId } },
+							players: { create: { user: { connect: { id: ctx.session.user.id } }, side } },
+						},
+						select: { id: true },
+					})
+					.catch(error => {
+						console.error(error);
+						throw new MatchError({ code: 'NOT_FOUND' });
+					});
+
+				return { success: true as const, matchId: created.id };
+			}
+
+			if (existingMatch.status === 'STARTED') throw new MatchError({ code: 'ONGOING_MATCH' });
+
+			const isUserInMatch = existingMatch.players.some(player => player.user.id === ctx.session.user.id);
+			if (isUserInMatch) throw new MatchError({ code: 'ALREADY_JOINED' });
+
+			const playersOnSide = existingMatch.players.filter(player => player.side === side);
+			const isSideFull = playersOnSide.length >= existingMatch.pitch.maxTeamSize;
+			if (isSideFull) throw new MatchError({ code: 'SIDE_FULL' });
+
+			await db.matchPlayer.create({
+				data: { matchId: existingMatch.id, userId: ctx.session.user.id, side },
+			});
+			return { success: true as const, matchId: existingMatch.id };
+		} catch (error) {
+			return { success: false as const, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
+		}
+	}),
+	/** Toggles currently signed in user as READY or NOT_READY */
+	ready: authorizedProcedure.input(z.object({ matchPlayerId: z.string() })).mutation(async ({ input, ctx }) => {
+		try {
+			const matchPlayer = await db.matchPlayer
+				.findUniqueOrThrow({
+					where: { id: input.matchPlayerId },
+					select: { id: true, match: { select: { pitchId: true } }, userId: true },
+				})
+				.catch(error => {
+					console.error(error);
+					throw new MatchError({ code: 'NOT_FOUND' });
+				});
+
+			const existingMatch = await findPendingMatch({ pitchId: matchPlayer.match.pitchId });
+
+			return match(existingMatch)
+				.with(P.nullish, () => {
+					throw new MatchError({ code: 'NOT_FOUND' });
+				})
+				.with({ status: 'STARTED' }, () => {
+					throw new MatchError({ code: 'ALREADY_STARTED' });
+				})
+				.with({ status: 'FINISHED' }, () => {
+					throw new MatchError({ code: 'ALREADY_FINISHED' });
+				})
+				.with({ status: 'NOT_STARTED' }, async match => {
+					const isUserInMatch = match.players.some(player => player.user.id === ctx.session.user.id);
+					if (!isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
+
+					const isUserReady = match.players.some(
+						player => player.user.id === ctx.session.user.id && player.state === 'READY',
+					);
+
+					await db.matchPlayer.update({
+						where: { id: matchPlayer.id },
+						data: { state: isUserReady ? 'NOT_READY' : 'READY' },
+						select: { id: true },
+					});
+					return { success: true, matchId: match.id };
+				})
+				.exhaustive();
+		} catch (error) {
+			return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
+		}
+	}),
+	/** Starts current match at pitchId */
+	start: authorizedProcedure.input(z.object({ matchId: z.string() })).mutation(async ({ input, ctx }) => {
+		try {
+			const existingMatch = await db.match
+				.findUniqueOrThrow({
+					where: { id: input.matchId },
+					select: {
+						id: true,
+						status: true,
+						pitch: {
+							select: {
+								maxTeamSize: true,
+								minTeamSize: true,
+							},
+						},
+						players: {
+							select: {
+								side: true,
+								state: true,
+								user: {
+									select: {
+										id: true,
+									},
+								},
+							},
+						},
+					},
+				})
+				.catch(error => {
+					console.error(error);
+					throw new MatchError({ code: 'NOT_FOUND' });
+				});
 
 			if (existingMatch.status === 'STARTED') throw new MatchError({ code: 'ALREADY_STARTED' });
 
-			const isPlayerInMatch = isUserInMatch({ match: existingMatch, user: ctx.session.user });
-			if (!isPlayerInMatch) throw new MatchError({ code: 'NOT_JOINED' });
+			const isUserInMatch = existingMatch.players.some(player => player.user.id === ctx.session.user.id);
+			if (!isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
+
+			const areAllPlayersReady = existingMatch.players.every(player => player.state === 'READY');
+			if (!areAllPlayersReady) throw new MatchError({ code: 'NOT_READY' });
 
 			const SideLengthSchema = z
 				.number()
 				.max(existingMatch.pitch.maxTeamSize, `Maximum team size is ${existingMatch.pitch.maxTeamSize}.`)
 				.min(existingMatch.pitch.minTeamSize, `Mininum team size is ${existingMatch.pitch.minTeamSize}.`);
+			const SideLengthsSchema = z.object({ SIDE_A: SideLengthSchema, SIDE_B: SideLengthSchema });
 
-			const sideALength = SideLengthSchema.safeParse(existingMatch.sideA.length);
-			if (!sideALength.success)
-				throw new MatchError({ code: 'TEAM_SIZE_MISMATCH', message: getErrorMessage(sideALength.error) });
-			const sideBLength = SideLengthSchema.safeParse(existingMatch.sideB.length);
-			if (!sideBLength.success)
-				throw new MatchError({ code: 'TEAM_SIZE_MISMATCH', message: getErrorMessage(sideBLength.error) });
+			const validateLengths = SideLengthsSchema.safeParse({
+				SIDE_A: existingMatch.players.filter(player => player.side === 'SIDE_A').length,
+				SIDE_B: existingMatch.players.filter(player => player.side === 'SIDE_B').length,
+			});
+			if (!validateLengths.success)
+				throw new MatchError({ code: 'TEAM_SIZE_MISMATCH', message: getErrorMessage(validateLengths.error) });
 
 			const started = await db.match.update({
 				where: { id: existingMatch.id },
@@ -125,8 +259,8 @@ export const matchRouter = router({
 
 			if (existingMatch.status === 'NOT_STARTED') throw new MatchError({ code: 'NOT_STARTED' });
 
-			const isPlayerInMatch = isUserInMatch({ match: existingMatch, user: ctx.session.user });
-			if (!isPlayerInMatch) throw new MatchError({ code: 'NOT_JOINED' });
+			const isUserInMatch = existingMatch.players.some(player => player.user.id === ctx.session.user.id);
+			if (isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
 
 			const ended = await db.match.update({
 				where: { id: existingMatch.id },

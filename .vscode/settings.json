@@ -22,6 +22,7 @@
 	"exportall.config.folderListener": [
 		"/apps/frontend/src/domains/user/components",
 		"/packages/core/domains/pagination",
-		"/packages/core/domains"
+		"/packages/core/domains",
+		"/packages/core/domains/match"
 	]
 }

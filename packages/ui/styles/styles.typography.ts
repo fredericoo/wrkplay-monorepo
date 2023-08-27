@@ -30,14 +30,14 @@ const textStyles: TextStylesFn = theme => ({
 		},
 		md: {
 			fontFamily: theme('fontFamily.display'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(40),
 			lineHeight: pxToRem(48),
 			letterSpacing: theme('letterSpacing.tighter'),
 		},
 		lg: {
 			fontFamily: theme('fontFamily.display'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(44),
 			lineHeight: pxToRem(52),
 			letterSpacing: theme('letterSpacing.tighter'),
@@ -46,7 +46,7 @@ const textStyles: TextStylesFn = theme => ({
 	heading: {
 		overline: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(16),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.widest'),
@@ -54,21 +54,21 @@ const textStyles: TextStylesFn = theme => ({
 		},
 		sm: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(14),
 			lineHeight: pxToRem(20),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		md: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(18),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		lg: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.bold'),
 			fontSize: pxToRem(20),
 			lineHeight: pxToRem(28),
 			letterSpacing: theme('letterSpacing.normal'),
@@ -77,28 +77,28 @@ const textStyles: TextStylesFn = theme => ({
 	body: {
 		xs: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.medium'),
+			fontWeight: theme('fontWeight.regular'),
 			fontSize: pxToRem(12),
 			lineHeight: pxToRem(16),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		sm: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.medium'),
+			fontWeight: theme('fontWeight.regular'),
 			fontSize: pxToRem(14),
 			lineHeight: pxToRem(20),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		md: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.medium'),
+			fontWeight: theme('fontWeight.regular'),
 			fontSize: pxToRem(16),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		lg: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.medium'),
+			fontWeight: theme('fontWeight.regular'),
 			fontSize: pxToRem(18),
 			lineHeight: pxToRem(28),
 			letterSpacing: theme('letterSpacing.normal'),
@@ -107,28 +107,28 @@ const textStyles: TextStylesFn = theme => ({
 	label: {
 		xs: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(12),
 			lineHeight: pxToRem(16),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		sm: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(14),
 			lineHeight: pxToRem(20),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		md: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(16),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.normal'),
 		},
 		lg: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.semibold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(18),
 			lineHeight: pxToRem(28),
 			letterSpacing: theme('letterSpacing.normal'),
@@ -147,10 +147,10 @@ const makeTextStyles = (
 	return deps.matchUtilities(
 		{
 			[property]: value => {
-				return obj(deps.theme)[property][value];
+				return obj(deps.theme)[property]?.[value] ?? null;
 			},
 		},
-		{ values: Object.fromEntries(Object.keys(obj(deps.theme)[property]).map(i => [i, i])) },
+		{ values: Object.fromEntries(Object.keys(obj(deps.theme)[property] ?? {}).map(i => [i, i])) },
 	);
 };
 

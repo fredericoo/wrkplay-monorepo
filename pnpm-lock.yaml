@@ -128,6 +128,9 @@ importers:
       react-router-typesafe:
         specifier: ^1.1.0
         version: 1.1.0(react-router-dom@6.15.0)(react@18.2.0)(typescript@5.0.4)
+      remeda:
+        specifier: ^1.25.2
+        version: 1.25.2
       sort-by:
         specifier: ^1.2.0
         version: 1.2.0
@@ -10072,6 +10075,10 @@ packages:
       retext-smartypants: 5.2.0
       unist-util-visit: 4.1.2
     dev: true
+
+  /remeda@1.25.2:
+    resolution: {integrity: sha512-rWYb4nTgOrgWfOJb7q2JFa/925M6XXf+wJ2n4T1ItviVPjyzqpSW+Qt6t9N/Qbciw9McNCqsgV4/gzJGfwhB5w==}
+    dev: false
 
   /remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
