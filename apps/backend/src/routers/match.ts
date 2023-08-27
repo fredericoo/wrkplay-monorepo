@@ -1,7 +1,7 @@
+import { CursorPaginationSchema } from '@wrkplay/core';
 import { z } from 'zod';
 
 import { authorizedProcedure } from '../domains/auth/auth.middleware';
-import { CursorPaginationSchema } from '../domains/common/common.schemas';
 import { getCursorPagination } from '../domains/common/common.utils';
 import { db } from '../domains/db/db.client';
 import { getErrorCode, getErrorMessage } from '../domains/error/error.utils';
@@ -13,6 +13,7 @@ export const matchRouter = router({
 		const pagination = getCursorPagination(input);
 		return await db.match.findMany({
 			where: { status: 'FINISHED' },
+			orderBy: { createdAt: 'desc' },
 			select: {
 				id: true,
 				createdAt: true,

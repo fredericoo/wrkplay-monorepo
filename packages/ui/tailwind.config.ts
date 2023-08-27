@@ -3,7 +3,7 @@ import { Config } from 'tailwindcss/types/config';
 import { utilsPlugin } from './styles/styles.utils';
 
 const config: Config = {
-	content: ['../../packages/ui/components/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+	content: ['../../packages/ui/src/components/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		container: {
 			center: true,

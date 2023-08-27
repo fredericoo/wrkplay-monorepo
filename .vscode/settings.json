@@ -18,5 +18,10 @@
 		"editor.defaultFormatter": "Prisma.prisma"
 	},
 	"workbench.tree.indent": 16,
-	"tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]]
+	"tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+	"exportall.config.folderListener": [
+		"/apps/frontend/src/domains/user/components",
+		"/packages/core/domains/pagination",
+		"/packages/core/domains"
+	]
 }

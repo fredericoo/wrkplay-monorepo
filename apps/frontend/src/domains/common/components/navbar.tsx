@@ -1,14 +1,11 @@
-import { Badge, Button, Logo } from '@wrkplay/ui';
+import { Button, Logo } from '@wrkplay/ui';
 import { Link } from 'react-router-dom';
 
-import { Deferred } from './Deferred';
-
 type NavbarProps = {
-	venueId?: string;
-	counts?: Promise<{ pitches: number }> | { pitches: number };
+	user: { name: string } | null;
 };
 
-export const Navbar = ({ venueId, counts }: NavbarProps) => {
+export const Navbar = ({ user }: NavbarProps) => {
 	return (
 		<nav className="border-b border-border-subtle-neutral bg-background-lowest py-4">
 			<div className="container flex items-center">
@@ -20,31 +17,16 @@ export const Navbar = ({ venueId, counts }: NavbarProps) => {
 					</Button>
 				</div>
 
-				<div className="flex items-center gap-2">
-					{venueId && (
-						<>
-							<Button intent="ghost" asChild>
-								<Link to={`/venue/${venueId}`}>Home</Link>
-							</Button>
-							<Button intent="ghost" asChild>
-								<Link to={`/venue/${venueId}/pitches`}>
-									Pitches{' '}
-									<Deferred data={counts} loadingElement={null} errorElement={null}>
-										{counts => {
-											if (!counts) return null;
-											return <Badge variant="outline">{counts.pitches}</Badge>;
-										}}
-									</Deferred>
-								</Link>
-							</Button>
-							<Button intent="ghost" asChild>
-								<Link to={`/settings`}>Settings</Link>
-							</Button>
-						</>
-					)}
-				</div>
+				<ul className="flex items-center gap-2">
+					<Button intent="ghost" asChild>
+						<Link to={`/`}>Home</Link>
+					</Button>
+					<Button intent="ghost" asChild>
+						<Link to={`/users`}>Users</Link>
+					</Button>
+				</ul>
 
-				<div className="flex flex-1 justify-end"></div>
+				<div className="flex flex-1 justify-end">{user?.name}</div>
 			</div>
 		</nav>
 	);

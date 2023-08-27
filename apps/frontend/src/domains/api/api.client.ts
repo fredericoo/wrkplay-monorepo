@@ -8,6 +8,9 @@ export const api = createTRPCProxyClient<AppRouter>({
 	links: [
 		httpBatchLink({
 			url: ENV.VITE_BACKEND_URL,
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
 		}),
 	],
 });
