@@ -86,10 +86,12 @@ export const MatchPage = () => {
 			return (
 				<div className="container flex flex-col gap-8 py-8">
 					<div className="grid place-content-center gap-8 text-center md:grid-cols-2">
-						<div>
+						<div aria-label="Side A">
+							<ul>{playersBySide.SIDE_A?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
 							<p className="display-sm">{scores.opponent}</p>
 						</div>
-						<div className="flex items-center gap-4">
+						<div aria-label="Side B" className="flex items-center gap-4">
+							<ul>{playersBySide.SIDE_B?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
 							<Button intent="negative" size="icon">
 								<IoArrowDown />
 							</Button>
