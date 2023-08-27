@@ -1,5 +1,7 @@
-import { Button, Logo } from '@wrkplay/ui';
+import { Button } from '@wrkplay/ui';
 import { Link } from 'react-router-dom';
+
+import Logo from '../../../assets/logo.png';
 
 type NavbarProps = {
 	user: { name: string } | null;
@@ -7,12 +9,12 @@ type NavbarProps = {
 
 export const Navbar = ({ user }: NavbarProps) => {
 	return (
-		<nav className="border-b border-border-subtle-neutral bg-background-lowest py-4">
+		<nav className="flex h-16 items-center border-b border-border-subtle-neutral bg-background-lowest">
 			<div className="container flex items-center">
 				<div className="flex flex-1 items-center justify-start gap-4">
 					<Button intent="unstyled" className="-mx-1 p-1" asChild>
 						<Link to="/">
-							<Logo height="24px" />
+							<img className="h-8 w-8" src={Logo} alt="wrkplay" />
 						</Link>
 					</Button>
 				</div>
