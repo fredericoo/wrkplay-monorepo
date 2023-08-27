@@ -4,7 +4,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 import { cn } from '../../../lib/utils';
 
 export const buttonVariants = cva(
-	'inline-flex items-center justify-center gap-2 truncate rounded-full ring-offset-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-solid-hover-primary/50',
+	'inline-flex items-center justify-center gap-2 truncate rounded-full ring-offset-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-solid-hover-primary/50 disabled:cursor-not-allowed disabled:opacity-25',
 	{
 		variants: {
 			size: {
@@ -17,9 +17,8 @@ export const buttonVariants = cva(
 				primary: `bg-interactive-solid-primary text-copy-inverted 
 				 duration-300 ease-expo-out hover:scale-hover
 				hover:bg-interactive-solid-hover-primary active:scale-active active:bg-interactive-solid-active-primary active:text-copy-inverted/90`,
-				positive: `bg-interactive-solid-positive text-copy-inverted 
-				duration-300 ease-expo-out hover:scale-hover
-			   hover:bg-interactive-solid-hover-positive active:scale-active active:bg-interactive-solid-active-positive active:text-copy-inverted/90`,
+				positive: `bg-interactive-solid-positive text-copy-highcontrast-positive duration-300 ease-expo-out hover:scale-hover
+			   hover:bg-interactive-solid-hover-positive active:scale-active active:bg-interactive-solid-active-positive`,
 				negative: `bg-interactive-solid-negative text-copy-inverted 
 				duration-300 ease-expo-out hover:scale-hover
 			   hover:bg-interactive-solid-hover-negative active:scale-active active:bg-interactive-solid-active-negative active:text-copy-inverted/90`,

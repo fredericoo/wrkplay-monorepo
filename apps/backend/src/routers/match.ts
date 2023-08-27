@@ -252,15 +252,42 @@ export const matchRouter = router({
 			return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
 		}
 	}),
-	end: authorizedProcedure.input(z.object({ pitchId: z.string() })).mutation(async ({ input, ctx }) => {
+	end: authorizedProcedure.input(z.object({ matchId: z.string() })).mutation(async ({ input, ctx }) => {
 		try {
-			const existingMatch = await findPendingMatch(input);
-			if (!existingMatch) throw new MatchError({ code: 'NOT_FOUND' });
+			const existingMatch = await db.match
+				.findUniqueOrThrow({
+					where: { id: input.matchId },
+					select: {
+						id: true,
+						status: true,
+						pitch: {
+							select: {
+								maxTeamSize: true,
+								minTeamSize: true,
+							},
+						},
+						players: {
+							select: {
+								state: true,
+								user: {
+									select: {
+										id: true,
+									},
+								},
+							},
+						},
+					},
+				})
+				.catch(error => {
+					console.error(error);
+					throw new MatchError({ code: 'NOT_FOUND' });
+				});
 
 			if (existingMatch.status === 'NOT_STARTED') throw new MatchError({ code: 'NOT_STARTED' });
+			if (existingMatch.status === 'FINISHED') throw new MatchError({ code: 'ALREADY_FINISHED' });
 
 			const isUserInMatch = existingMatch.players.some(player => player.user.id === ctx.session.user.id);
-			if (isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
+			if (!isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
 
 			const ended = await db.match.update({
 				where: { id: existingMatch.id },

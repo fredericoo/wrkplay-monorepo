@@ -1,6 +1,6 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
-import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
+import { IoArrowDown, IoArrowUp, IoBanOutline, IoSkull } from 'react-icons/io5';
 import { Form, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
@@ -84,23 +84,49 @@ export const MatchPage = () => {
 			};
 
 			return (
-				<div className="container flex flex-col gap-8 py-8">
-					<div className="grid place-content-center gap-8 text-center md:grid-cols-2">
-						<div aria-label="Side A">
-							<ul>{playersBySide.SIDE_A?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
+				<div className="container flex flex-grow flex-col gap-8 py-8">
+					<div className="grid flex-grow place-content-center gap-8 text-center md:grid-cols-2">
+						<div aria-label="Side A" className="flex flex-col items-center">
+							<ul>
+								{playersBySide.SIDE_A?.map(player => (
+									<li key={player.id}>
+										<MatchPlayerRow omitStates={['READY']} player={player} />
+									</li>
+								))}
+							</ul>
 							<p className="display-sm">{scores.opponent}</p>
 						</div>
-						<div aria-label="Side B" className="flex items-center gap-4">
-							<ul>{playersBySide.SIDE_B?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
-							<Button intent="negative" size="icon">
-								<IoArrowDown />
-							</Button>
-							<p className="display-lg">{scores.me}</p>
-							<Button intent="positive" size="icon">
-								<IoArrowUp />
-							</Button>
+						<div aria-label="Side B" className="flex flex-col items-center">
+							<ul>
+								{playersBySide.SIDE_B?.map(player => (
+									<li key={player.id}>
+										<MatchPlayerRow omitStates={['READY']} player={player} />
+									</li>
+								))}
+							</ul>
+							<div className="flex items-center gap-4">
+								<Button intent="negative" size="icon">
+									<IoArrowDown />
+								</Button>
+								<p className="display-sm">{scores.me}</p>
+								<Button intent="positive" size="icon">
+									<IoArrowUp />
+								</Button>
+							</div>
 						</div>
 					</div>
+					<Form method="POST" className="flex justify-center gap-2">
+						<Button type="submit" name="intent" value="end" intent="positive">
+							Finish
+						</Button>
+						<Button disabled intent="secondary">
+							<IoBanOutline /> Cancel
+						</Button>
+						<Button disabled intent="negative">
+							<IoSkull /> Forfeit
+						</Button>
+					</Form>
+					{JSON.stringify(response)}
 				</div>
 			);
 		})

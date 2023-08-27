@@ -1,5 +1,5 @@
 import { MatchError } from '@wrkplay/core';
-import { makeAction } from 'react-router-typesafe';
+import { makeAction, redirect } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
 import { z } from 'zod';
 
@@ -13,6 +13,9 @@ const ActionSchema = z.union([
 	}),
 	z.object({
 		intent: z.literal('start'),
+	}),
+	z.object({
+		intent: z.literal('end'),
 	}),
 ]);
 
@@ -32,6 +35,11 @@ export const matchAction = makeAction(async ({ request, params }) => {
 			})
 			.with({ intent: 'start' }, async () => {
 				return await api.match.start.mutate({ matchId });
+			})
+			.with({ intent: 'end' }, async () => {
+				const response = await api.match.end.mutate({ matchId });
+				if (response.success) return redirect('/');
+				return response;
 			})
 			.exhaustive();
 

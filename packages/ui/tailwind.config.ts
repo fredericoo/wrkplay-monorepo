@@ -90,9 +90,9 @@ const config: Config = {
 					active: {
 						neutral: 'hsl(var(--mauve-11) / <alpha-value>)',
 						primary: 'hsl(var(--amber-11) / <alpha-value>)',
-						positive: 'hsl(var(--teal-11) / <alpha-value>)',
-						warning: 'hsl(var(--amber-11) / <alpha-value>)',
-						negative: 'hsl(var(--red-11) / <alpha-value>)',
+						positive: 'hsl(var(--teal-10) / <alpha-value>)',
+						warning: 'hsl(var(--amber-10) / <alpha-value>)',
+						negative: 'hsl(var(--red-10) / <alpha-value>)',
 					},
 				},
 			},

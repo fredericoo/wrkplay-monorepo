@@ -16,6 +16,8 @@ export const IndexPage = () => {
 			<Button intent="primary" asChild>
 				<Link to="/join-match">Join match</Link>
 			</Button>
+
+			<h1 className="heading-lg">recent matches</h1>
 			{match(matches)
 				.with([], () => <MessageView heading="No matches" headingLevel="h1" />)
 				.otherwise(matches => (

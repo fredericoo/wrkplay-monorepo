@@ -17,9 +17,24 @@ export const HistoricalMatch = ({ match }: HistoricalMatchProps) => {
 			>
 				{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}
 			</time>
-			<div className="grid grid-cols-2 gap-2">
-				<ul>{playersBySide.SIDE_A?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
-				<ul>{playersBySide.SIDE_B?.map(player => <li key={player.id}>{player.user.name}</li>)}</ul>
+			<div className="flex gap-2 text-center">
+				<ul aria-label="Side A players" className="flex flex-1 flex-col body-md">
+					{playersBySide.SIDE_A?.map(player => (
+						<li key={player.id} className="truncate">
+							{player.user.name}
+						</li>
+					))}
+				</ul>
+				<div className="label-md">{match.sideAScore}</div>
+				<div className="text-icon-lowContrast-neutral">×</div>
+				<div className="label-md">{match.sideBScore}</div>
+				<ul aria-label="Side B players" className="flex flex-1 flex-col body-md">
+					{playersBySide.SIDE_B?.map(player => (
+						<li key={player.id} className="truncate">
+							{player.user.name}
+						</li>
+					))}
+				</ul>
 			</div>
 			<p className="text-center text-copy-lowcontrast-neutral body-sm">
 				<span className="text-icon-highContrast-neutral">{match.pitch.name}</span> at{' '}
