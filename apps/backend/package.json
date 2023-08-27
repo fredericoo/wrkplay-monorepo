@@ -8,7 +8,8 @@
 		"start": "tsx src/index",
 		"lint": "eslint src --max-warnings 0 --fix",
 		"build": "esbuild src/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
-		"setup-local": "cp .env.template .env && prisma migrate dev"
+		"setup-local": "cp .env.template .env && prisma migrate dev",
+		"prepare": "prisma generate"
 	},
 	"keywords": [],
 	"author": "",
