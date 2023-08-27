@@ -1,4 +1,5 @@
 import { Button, Input } from '@wrkplay/ui';
+import { IoArrowForward } from 'react-icons/io5';
 import { Form, Link } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 
@@ -35,32 +36,37 @@ export const JoinMatchPage = () => {
 			</div>
 
 			<Deferred data={pendingMatches} errorElement={null} loadingElement={null}>
-				{pendingMatches => (
-					<div className="flex w-full max-w-md flex-col gap-4">
-						<p className="text-center text-copy-lowcontrast-neutral body-sm">or</p>
-						<h2 className="text-center heading-md">continue where you left off</h2>
-						<ul className="flex flex-col gap-2">
-							{pendingMatches.map(match => (
-								<li
-									key={match.id}
-									className="flex items-center gap-4 rounded-lg border border-border-subtle-neutral bg-background-subtle-neutral px-6 py-4"
-								>
-									<div className="flex-grow overflow-hidden">
-										<p className="truncate label-md">
-											{match.pitch.name} at {match.pitch.venue.name}
-										</p>
-										<p className="truncate text-copy-lowcontrast-neutral body-sm">
-											started <time>{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}</time>
-										</p>
-									</div>
-									<Button intent="primary" asChild>
-										<Link to={`/match/${match.id}`}>Continue</Link>
-									</Button>
-								</li>
-							))}
-						</ul>
-					</div>
-				)}
+				{pendingMatches => {
+					if (pendingMatches.length === 0) return null;
+					return (
+						<div className="flex w-full max-w-md flex-col gap-4">
+							<p className="text-center text-copy-lowcontrast-neutral body-sm">or</p>
+							<h2 className="text-center heading-md">continue where you left off</h2>
+							<ul className="flex flex-col gap-2">
+								{pendingMatches.map(match => (
+									<li
+										key={match.id}
+										className="flex items-center gap-4 rounded-lg border border-border-subtle-neutral bg-background-subtle-neutral px-6 py-4"
+									>
+										<div className="flex-grow overflow-hidden">
+											<p className="truncate label-md">
+												{match.pitch.name} at {match.pitch.venue.name}
+											</p>
+											<p className="truncate text-copy-lowcontrast-neutral body-sm">
+												started <time>{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}</time>
+											</p>
+										</div>
+										<Button intent="primary" asChild>
+											<Link to={`/match/${match.id}`}>
+												Continue <IoArrowForward />
+											</Link>
+										</Button>
+									</li>
+								))}
+							</ul>
+						</div>
+					);
+				}}
 			</Deferred>
 		</div>
 	);

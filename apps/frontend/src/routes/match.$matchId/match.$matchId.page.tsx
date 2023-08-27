@@ -1,5 +1,6 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
+import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 import { Form, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
@@ -84,12 +85,18 @@ export const MatchPage = () => {
 
 			return (
 				<div className="container flex flex-col gap-8 py-8">
-					<div className="grid gap-8 text-center md:grid-cols-2">
+					<div className="grid place-content-center gap-8 text-center md:grid-cols-2">
 						<div>
 							<p className="display-sm">{scores.opponent}</p>
 						</div>
-						<div>
+						<div className="flex items-center gap-4">
+							<Button intent="negative" size="icon">
+								<IoArrowDown />
+							</Button>
 							<p className="display-lg">{scores.me}</p>
+							<Button intent="positive" size="icon">
+								<IoArrowUp />
+							</Button>
 						</div>
 					</div>
 				</div>
