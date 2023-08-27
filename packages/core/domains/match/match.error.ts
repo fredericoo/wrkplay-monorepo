@@ -9,6 +9,7 @@ type ErrorCode =
 	| 'NOT_IN_MATCH'
 	| 'ALREADY_JOINED'
 	| 'ONGOING_MATCH'
+	| 'INVALID_SCORE'
 	| 'TEAM_SIZE_MISMATCH';
 
 export class MatchError extends Error {

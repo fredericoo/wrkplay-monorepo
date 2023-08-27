@@ -17,6 +17,11 @@ const ActionSchema = z.union([
 	z.object({
 		intent: z.literal('end'),
 	}),
+	z.object({
+		intent: z.literal('update_score'),
+		score: z.coerce.number(),
+		side: z.enum(['SIDE_A', 'SIDE_B']),
+	}),
 ]);
 
 const ParamsSchema = z.object({
@@ -26,6 +31,7 @@ const ParamsSchema = z.object({
 export const matchAction = makeAction(async ({ request, params }) => {
 	try {
 		const formData = await request.formData();
+
 		const data = ActionSchema.parse(Object.fromEntries(formData));
 		const { matchId } = ParamsSchema.parse(params);
 
@@ -41,6 +47,10 @@ export const matchAction = makeAction(async ({ request, params }) => {
 				if (response.success) return redirect('/');
 				return response;
 			})
+			.with({ intent: 'update_score' }, async ({ score, side }) => {
+				console.log('UPDATING SCORE');
+				return await api.match.updateScore.mutate({ matchId, score, side });
+			})
 			.exhaustive();
 
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -52,5 +62,6 @@ export const matchAction = makeAction(async ({ request, params }) => {
 		if (isInstanceOf(MatchError)(error)) {
 			return error;
 		}
+		throw error;
 	}
 });

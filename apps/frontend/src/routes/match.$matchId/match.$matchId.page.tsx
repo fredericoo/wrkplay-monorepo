@@ -1,6 +1,6 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
-import { IoArrowDown, IoArrowUp, IoBanOutline, IoSkull } from 'react-icons/io5';
+import { IoBanOutline, IoSkull } from 'react-icons/io5';
 import { Form, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
@@ -8,6 +8,7 @@ import { match } from 'ts-pattern';
 import { groupBy } from '~/domains/common/common.utils';
 import { MessageView } from '~/domains/common/components/message-view';
 import { MatchPlayerRow } from '~/domains/match/components/match-player-row';
+import { TeamScore } from '~/domains/match/components/team-score';
 
 import type { matchAction } from './match.$matchId.action';
 import type { matchLoader } from './match.$matchId.loader';
@@ -78,11 +79,6 @@ export const MatchPage = () => {
 			);
 		})
 		.with({ status: 'STARTED' }, () => {
-			const scores = {
-				me: me.side === 'SIDE_A' ? currentMatch.sideAScore : currentMatch.sideBScore,
-				opponent: me.side === 'SIDE_A' ? currentMatch.sideBScore : currentMatch.sideAScore,
-			};
-
 			return (
 				<div className="container flex flex-grow flex-col gap-8 py-8">
 					<div className="grid flex-grow place-content-center gap-8 text-center md:grid-cols-2">
@@ -94,7 +90,7 @@ export const MatchPage = () => {
 									</li>
 								))}
 							</ul>
-							<p className="display-sm">{scores.opponent}</p>
+							<TeamScore score={currentMatch.sideAScore} side="SIDE_A" controls={me.side === 'SIDE_A'} />
 						</div>
 						<div aria-label="Side B" className="flex flex-col items-center">
 							<ul>
@@ -104,17 +100,10 @@ export const MatchPage = () => {
 									</li>
 								))}
 							</ul>
-							<div className="flex items-center gap-4">
-								<Button intent="negative" size="icon">
-									<IoArrowDown />
-								</Button>
-								<p className="display-sm">{scores.me}</p>
-								<Button intent="positive" size="icon">
-									<IoArrowUp />
-								</Button>
-							</div>
+							<TeamScore score={currentMatch.sideBScore} side="SIDE_B" controls={me.side === 'SIDE_B'} />
 						</div>
 					</div>
+					{JSON.stringify(response)}
 					<Form method="POST" className="flex justify-center gap-2">
 						<Button type="submit" name="intent" value="end" intent="positive">
 							Finish
@@ -126,7 +115,6 @@ export const MatchPage = () => {
 							<IoSkull /> Forfeit
 						</Button>
 					</Form>
-					{JSON.stringify(response)}
 				</div>
 			);
 		})

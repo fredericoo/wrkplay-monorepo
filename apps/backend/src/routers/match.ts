@@ -299,4 +299,59 @@ export const matchRouter = router({
 			return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
 		}
 	}),
+	updateScore: authorizedProcedure
+		.input(z.object({ matchId: z.string(), side: z.enum(['SIDE_A', 'SIDE_B']), score: z.number() }))
+		.mutation(async ({ input, ctx }) => {
+			try {
+				if (input.score < 0) throw new MatchError({ code: 'INVALID_SCORE' });
+
+				const existingMatch = await db.match
+					.findUniqueOrThrow({
+						where: { id: input.matchId },
+						select: {
+							id: true,
+							status: true,
+							sideAScore: true,
+							sideBScore: true,
+							pitch: {
+								select: {
+									maxTeamSize: true,
+									minTeamSize: true,
+								},
+							},
+							players: {
+								select: {
+									state: true,
+									user: {
+										select: {
+											id: true,
+										},
+									},
+								},
+							},
+						},
+					})
+					.catch(error => {
+						console.error(error);
+						throw new MatchError({ code: 'NOT_FOUND' });
+					});
+
+				if (existingMatch.status === 'NOT_STARTED') throw new MatchError({ code: 'NOT_STARTED' });
+				if (existingMatch.status === 'FINISHED') throw new MatchError({ code: 'ALREADY_FINISHED' });
+
+				const isUserInMatch = existingMatch.players.some(player => player.user.id === ctx.session.user.id);
+				if (!isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
+
+				const keyToUpdate = input.side === 'SIDE_A' ? 'sideAScore' : 'sideBScore';
+
+				const updated = await db.match.update({
+					where: { id: existingMatch.id },
+					data: { [keyToUpdate]: input.score },
+					select: { id: true },
+				});
+				return { success: true, matchId: updated.id };
+			} catch (error) {
+				return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
+			}
+		}),
 });
