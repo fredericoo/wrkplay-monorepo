@@ -2,7 +2,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import * as React from 'react';
 import { cn } from '../../../lib/utils';
 
-const inputVariants = cva('flex rounded-2 transition-all duration-300 ease-expo-out body-sm', {
+const inputVariants = cva('flex rounded-2 transition-all duration-300 ease-expo-out body-md', {
 	variants: {
 		variant: {
 			default:
