@@ -34,14 +34,14 @@ const config: Config = {
 			background: {
 				lowest: 'hsl(var(--background) / <alpha-value>)',
 				highest: 'hsl(var(--foreground) / <alpha-value>)',
-				app: 'hsl(var(--mauve-1) / <alpha-value>)',
+				app: 'hsl(var(--mauve-2) / <alpha-value>)',
 				subtle: {
-					neutral: 'hsl(var(--mauve-2) / <alpha-value>)',
-					neutralA: 'hsl(var(--alpha-2) / <alpha-value>)',
-					primary: 'hsl(var(--amber-2) / <alpha-value>)',
-					positive: 'hsl(var(--teal-2) / <alpha-value>)',
-					warning: 'hsl(var(--amber-2) / <alpha-value>)',
-					negative: 'hsl(var(--red-2) / <alpha-value>)',
+					neutral: 'hsl(var(--mauve-1) / <alpha-value>)',
+					neutralA: 'hsl(var(--alpha-1) / <alpha-value>)',
+					primary: 'hsl(var(--amber-1) / <alpha-value>)',
+					positive: 'hsl(var(--teal-1) / <alpha-value>)',
+					warning: 'hsl(var(--amber-1) / <alpha-value>)',
+					negative: 'hsl(var(--red-1) / <alpha-value>)',
 				},
 				strong: {
 					neutral: 'hsl(var(--mauve-9) / <alpha-value>)',
@@ -98,11 +98,11 @@ const config: Config = {
 			},
 			border: {
 				subtle: {
-					neutral: 'hsl(var(--mauve-6) / <alpha-value>)',
-					primary: 'hsl(var(--amber-6) / <alpha-value>)',
-					positive: 'hsl(var(--teal-6) / <alpha-value>)',
-					warning: 'hsl(var(--amber-6) / <alpha-value>)',
-					negative: 'hsl(var(--red-6) / <alpha-value>)',
+					neutral: 'hsl(var(--mauve-5) / <alpha-value>)',
+					primary: 'hsl(var(--amber-5) / <alpha-value>)',
+					positive: 'hsl(var(--teal-5) / <alpha-value>)',
+					warning: 'hsl(var(--amber-5) / <alpha-value>)',
+					negative: 'hsl(var(--red-5) / <alpha-value>)',
 				},
 				element: {
 					neutral: 'hsl(var(--mauve-7) / <alpha-value>)',
@@ -160,9 +160,16 @@ const config: Config = {
 			},
 		},
 		borderRadius: {
-			lg: '1rem',
-			md: '0.75rem',
-			sm: '0.5rem',
+			1: '0.25rem',
+			2: '0.5rem',
+			3: '0.75rem',
+			4: '1rem',
+			5: '1.25rem',
+			6: '1.5rem',
+			7: '1.75rem',
+			8: '2rem',
+			12: '3rem',
+			16: '4rem',
 			full: '9999px',
 		},
 		extend: {

@@ -17,24 +17,26 @@ export const IndexPage = () => {
 				<Link to="/join-match">Join match</Link>
 			</Button>
 
-			<h1 className="heading-lg">Recent matches</h1>
-			{match(matches)
-				.with([], () => (
-					<MessageView
-						heading="Ready for the first match"
-						headingLevel="h1"
-						message="Played matches will appear here"
-					/>
-				))
-				.otherwise(matches => (
-					<ol className="flex w-full max-w-md flex-col gap-4">
-						{matches.map(match => (
-							<li key={match.id}>
-								<HistoricalMatch match={match} />
-							</li>
-						))}
-					</ol>
-				))}
+			<section className="flex w-full max-w-md flex-col gap-8 rounded-5 border border-border-subtle-neutral bg-background-subtle-neutral p-2">
+				<h1 className="text-center heading-lg">Recent matches</h1>
+				{match(matches)
+					.with([], () => (
+						<MessageView
+							heading="Ready for the first match"
+							headingLevel="h1"
+							message="Played matches will appear here"
+						/>
+					))
+					.otherwise(matches => (
+						<ol className="flex w-full max-w-md flex-col gap-4">
+							{matches.map(match => (
+								<li key={match.id}>
+									<HistoricalMatch match={match} />
+								</li>
+							))}
+						</ol>
+					))}
+			</section>
 		</div>
 	);
 };

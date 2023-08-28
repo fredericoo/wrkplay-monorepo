@@ -7,11 +7,6 @@
 	"[typescript]": {
 		"typescript.preferences.importModuleSpecifier": "non-relative"
 	},
-	"[typescriptreact]": {
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": true
-		}
-	},
 	"window.commandCenter": true,
 	"editor.rulers": [120],
 	"[prisma]": {

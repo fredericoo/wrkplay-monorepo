@@ -51,7 +51,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({ heading = 'Error!', messag
 									{import.meta.env.DEV && (
 										<div className="flex w-full max-w-lg flex-col items-center">
 											<h3 className="text-border-element-hover-negative label-xs">Dev error</h3>
-											<div className="max-h-[20rem] w-full overflow-scroll rounded-md border border-border-element-negative bg-background-subtle-negative text-copy-lowcontrast-negative body-xs">
+											<div className="max-h-[20rem] w-full overflow-scroll rounded-3 border border-border-element-negative bg-background-subtle-negative text-copy-lowcontrast-negative body-xs">
 												<pre className="px-2 py-2">{getErrorPayload(error).toString()}</pre>
 											</div>
 										</div>

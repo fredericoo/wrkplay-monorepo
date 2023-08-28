@@ -1,5 +1,6 @@
 import type { BadgeProps } from '@wrkplay/ui';
 import { Badge } from '@wrkplay/ui';
+import { cn } from '@wrkplay/ui/lib/utils';
 
 import type { MatchPlayer } from '../match.types';
 
@@ -26,7 +27,7 @@ const stateToBadgeProps: Record<MatchPlayer['state'], BadgeProps> = {
 	},
 };
 
-type MatchPlayerStateProps = { state: MatchPlayer['state'] };
-export const MatchPlayerState = ({ state }: MatchPlayerStateProps) => (
-	<Badge className="transition-all duration-500" {...stateToBadgeProps[state]} />
+type MatchPlayerStateProps = { state: MatchPlayer['state'] } & BadgeProps;
+export const MatchPlayerState = ({ state, className, ...props }: MatchPlayerStateProps) => (
+	<Badge className={cn('transition-all duration-500', className)} {...stateToBadgeProps[state]} {...props} />
 );

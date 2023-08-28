@@ -5,6 +5,7 @@
 @layer base {
 	html {
 		@apply h-full;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	body {
@@ -99,6 +100,7 @@
 		--teal-12: 172 70% 12%;
 
 		--background: 0 0% 100%;
+		--foreground: 0 0% 0%;
 	}
 
 	.dark {
@@ -181,5 +183,6 @@
 		--teal-12: 170 100% 21%;
 
 		--background: 0 0% 0%;
+		--foreground: 0 0% 100%;
 	}
 }

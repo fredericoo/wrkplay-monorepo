@@ -10,9 +10,9 @@ export const HistoricalMatch = ({ match }: HistoricalMatchProps) => {
 	const playersBySide = groupBy(match.players, x => x.side);
 
 	return (
-		<div className="relative rounded-lg border border-border-subtle-neutral bg-background-subtle-neutral p-4">
+		<div className="relative rounded-4 border border-border-subtle-neutral bg-background-lowest px-4 pb-3 pt-5">
 			<time
-				className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border-subtle-neutral bg-background-subtle-neutral px-2 py-1 text-copy-lowcontrast-neutral body-xs"
+				className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border-subtle-neutral bg-background-subtle-neutral px-2 py-0.5 text-copy-lowcontrast-neutral body-xs"
 				dateTime={match.createdAt}
 			>
 				{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}

@@ -5,8 +5,11 @@ type MatchPlayerRowProps = { player: MatchPlayer; omitStates?: MatchPlayer['stat
 
 export const MatchPlayerRow = ({ player, omitStates = [] }: MatchPlayerRowProps) => {
 	return (
-		<p key={player.user.id} className="body-md">
-			{player.user.name} {!omitStates.includes(player.state) && <MatchPlayerState state={player.state} />}
+		<p key={player.user.id} className="flex max-w-full items-center gap-4">
+			<div className="w-24">
+				{!omitStates.includes(player.state) && <MatchPlayerState className="block" state={player.state} />}
+			</div>
+			<span className="flex-grow truncate label-md">{player.user.name}</span>
 		</p>
 	);
 };

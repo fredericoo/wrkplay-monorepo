@@ -1,4 +1,5 @@
 import { Button } from '@wrkplay/ui';
+import { IoPersonCircleOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 import Logo from '../../../assets/logo.png';
@@ -28,7 +29,14 @@ export const Navbar = ({ user }: NavbarProps) => {
 					</Button>
 				</ul>
 
-				<div className="flex flex-1 justify-end">{user?.name}</div>
+				<div className="flex flex-1 justify-end">
+					{user && (
+						<div className="flex items-center gap-1 label-sm">
+							<IoPersonCircleOutline className="label-lg" />
+							<span>{user.name}</span>
+						</div>
+					)}
+				</div>
 			</div>
 		</nav>
 	);

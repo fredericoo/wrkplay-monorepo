@@ -1,4 +1,5 @@
 import { Button, Input } from '@wrkplay/ui';
+import { AnimatePresence, motion } from 'framer-motion';
 import { IoArrowForward } from 'react-icons/io5';
 import { Form, Link } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
@@ -17,9 +18,9 @@ export const JoinMatchPage = () => {
 	return (
 		<div className="container flex flex-col items-center gap-4 py-8">
 			<div className="flex w-full max-w-md flex-col gap-2">
-				<h1 className="text-center heading-md">Join Match</h1>
+				<h1 className="text-center heading-lg">Join Match</h1>
 
-				<p className="text-center body-md">Scan the NFC tag or enter its code below:</p>
+				<p className="text-center text-copy-lowcontrast-neutral body-md">Scan the NFC tag or enter its code below:</p>
 				<Form className="flex flex-col gap-2" method="POST">
 					<Input
 						autoCapitalize="off"
@@ -35,39 +36,46 @@ export const JoinMatchPage = () => {
 				{JSON.stringify(response)}
 			</div>
 
-			<Deferred data={pendingMatches} errorElement={null} loadingElement={null}>
-				{pendingMatches => {
-					if (pendingMatches.length === 0) return null;
-					return (
-						<div className="flex w-full max-w-md flex-col gap-4">
-							<p className="text-center text-copy-lowcontrast-neutral body-sm">or</p>
-							<h2 className="text-center heading-md">continue where you left off</h2>
-							<ul className="flex flex-col gap-2">
-								{pendingMatches.map(match => (
-									<li
-										key={match.id}
-										className="flex items-center gap-4 rounded-lg border border-border-subtle-neutral bg-background-subtle-neutral px-6 py-4"
-									>
-										<div className="flex-grow overflow-hidden">
-											<p className="truncate label-md">
-												{match.pitch.name} at {match.pitch.venue.name}
-											</p>
-											<p className="truncate text-copy-lowcontrast-neutral body-sm">
-												started <time>{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}</time>
-											</p>
-										</div>
-										<Button intent="primary" asChild>
-											<Link to={`/match/${match.id}`}>
-												Continue <IoArrowForward />
-											</Link>
-										</Button>
-									</li>
-								))}
-							</ul>
-						</div>
-					);
-				}}
-			</Deferred>
+			<AnimatePresence>
+				<Deferred data={pendingMatches} errorElement={null} loadingElement={null}>
+					{pendingMatches => {
+						if (pendingMatches.length === 0) return null;
+						return (
+							<motion.div
+								key="leftoff"
+								initial={{ scale: 0.9, opacity: 0 }}
+								animate={{ scale: 1, opacity: 1 }}
+								className="flex w-full max-w-md flex-col gap-4"
+							>
+								<p className="text-center text-copy-lowcontrast-neutral body-sm">or</p>
+								<h2 className="text-center heading-md">continue where you left off</h2>
+								<ul className="flex flex-col gap-2">
+									{pendingMatches.map(match => (
+										<li
+											key={match.id}
+											className="flex items-center gap-4 rounded-4 border border-border-subtle-neutral bg-background-subtle-neutral px-6 py-4"
+										>
+											<div className="flex-grow overflow-hidden">
+												<p className="truncate label-md">
+													{match.pitch.name} at {match.pitch.venue.name}
+												</p>
+												<p className="truncate text-copy-lowcontrast-neutral body-sm">
+													started <time>{getRelativeTimeDifference({ from: timeAtRender, to: match.createdAt })}</time>
+												</p>
+											</div>
+											<Button intent="primary" asChild>
+												<Link to={`/match/${match.id}`}>
+													Continue <IoArrowForward />
+												</Link>
+											</Button>
+										</li>
+									))}
+								</ul>
+							</motion.div>
+						);
+					}}
+				</Deferred>
+			</AnimatePresence>
 		</div>
 	);
 };

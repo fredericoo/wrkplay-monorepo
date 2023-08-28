@@ -44,7 +44,11 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 			<LayoutGroup id={layoutId}>
 				<AnimatePresence mode="popLayout" initial={animateInitial}>
 					{characters.map((character, i) => (
-						<motion.span key={`${character}${i}`} className="relative inline-block overflow-hidden">
+						<motion.span
+							key={`${character}${i}`}
+							className="relative inline-block overflow-hidden"
+							style={{ marginBottom: '-0.3em' }}
+						>
 							<motion.span
 								className="inline-block"
 								initial="initial"

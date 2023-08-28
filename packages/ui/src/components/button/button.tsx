@@ -14,7 +14,7 @@ export const buttonVariants = cva(
 			},
 
 			intent: {
-				primary: `bg-interactive-solid-primary text-copy-inverted 
+				primary: `bg-gradient-to-tr from-[#FE33A1] to-interactive-solid-primary  text-copy-inverted 
 				 duration-300 ease-expo-out hover:scale-hover
 				hover:bg-interactive-solid-hover-primary active:scale-active active:bg-interactive-solid-active-primary active:text-copy-inverted/90`,
 				positive: `bg-interactive-solid-positive text-copy-highcontrast-positive duration-300 ease-expo-out hover:scale-hover

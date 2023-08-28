@@ -12,17 +12,17 @@ export const UserList = ({ users }: UserListProps) => {
 	return match(users)
 		.with([], () => <MessageView heading="No users" headingLevel="h1" />)
 		.otherwise(users => (
-			<ol className="flex flex-col gap-2">
-				<Form method="POST">
+			<Form method="POST">
+				<ol className="flex flex-col gap-4 rounded-4 border border-border-subtle-neutral bg-background-subtle-neutral p-4">
 					{users.map(user => (
 						<li className="flex items-center gap-2" key={user.id}>
-							<span>{user.name}</span>{' '}
+							<span className="flex-grow truncate label-md">{user.name}</span>{' '}
 							<Button type="submit" name="userId" value={user.id} size="md" intent="secondary">
 								Impersonate
 							</Button>
 						</li>
 					))}
-				</Form>
-			</ol>
+				</ol>
+			</Form>
 		));
 };
