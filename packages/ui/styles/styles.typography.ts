@@ -58,6 +58,7 @@ const textStyles: TextStylesFn = theme => ({
 			fontSize: pxToRem(14),
 			lineHeight: pxToRem(20),
 			letterSpacing: theme('letterSpacing.normal'),
+			textTransform: 'lowercase',
 		},
 		md: {
 			fontFamily: theme('fontFamily.body'),
@@ -65,6 +66,7 @@ const textStyles: TextStylesFn = theme => ({
 			fontSize: pxToRem(18),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.normal'),
+			textTransform: 'lowercase',
 		},
 		lg: {
 			fontFamily: theme('fontFamily.body'),
@@ -72,6 +74,7 @@ const textStyles: TextStylesFn = theme => ({
 			fontSize: pxToRem(20),
 			lineHeight: pxToRem(28),
 			letterSpacing: theme('letterSpacing.normal'),
+			textTransform: 'lowercase',
 		},
 	},
 	body: {

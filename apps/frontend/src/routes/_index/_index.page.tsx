@@ -17,9 +17,15 @@ export const IndexPage = () => {
 				<Link to="/join-match">Join match</Link>
 			</Button>
 
-			<h1 className="heading-lg">recent matches</h1>
+			<h1 className="heading-lg">Recent matches</h1>
 			{match(matches)
-				.with([], () => <MessageView heading="No matches" headingLevel="h1" />)
+				.with([], () => (
+					<MessageView
+						heading="Ready for the first match"
+						headingLevel="h1"
+						message="Played matches will appear here"
+					/>
+				))
 				.otherwise(matches => (
 					<ol className="flex w-full max-w-md flex-col gap-4">
 						{matches.map(match => (

@@ -74,7 +74,7 @@ export const MessageView = ({
 					</div>
 				</div>
 			)}
-			<Heading className="heading-lg">{heading}</Heading>
+			<Heading className="heading-md">{heading}</Heading>
 			{message && <p className="max-w-sm text-copy-lowcontrast-neutral body-md">{message}</p>}
 			{children}
 		</div>
