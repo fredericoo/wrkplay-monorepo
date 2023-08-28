@@ -5,7 +5,7 @@ type MatchPlayerRowProps = { player: MatchPlayer; omitStates?: MatchPlayer['stat
 
 export const MatchPlayerRow = ({ player, omitStates = [] }: MatchPlayerRowProps) => {
 	return (
-		<p key={player.user.id}>
+		<p key={player.user.id} className="body-md">
 			{player.user.name} {!omitStates.includes(player.state) && <MatchPlayerState state={player.state} />}
 		</p>
 	);
