@@ -188,6 +188,42 @@ export const matchRouter = router({
 			return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
 		}
 	}),
+	leave: authorizedProcedure.input(z.object({ matchPlayerId: z.string() })).mutation(async ({ input, ctx }) => {
+		try {
+			const matchPlayer = await db.matchPlayer
+				.findUniqueOrThrow({
+					where: { id: input.matchPlayerId },
+					select: { id: true, match: { select: { pitchId: true } }, userId: true },
+				})
+				.catch(error => {
+					console.error(error);
+					throw new MatchError({ code: 'NOT_FOUND' });
+				});
+
+			const existingMatch = await findPendingMatch({ pitchId: matchPlayer.match.pitchId });
+
+			return match(existingMatch)
+				.with(P.nullish, () => {
+					throw new MatchError({ code: 'NOT_FOUND' });
+				})
+				.with({ status: 'STARTED' }, () => {
+					throw new MatchError({ code: 'ALREADY_STARTED' });
+				})
+				.with({ status: 'FINISHED' }, () => {
+					throw new MatchError({ code: 'ALREADY_FINISHED' });
+				})
+				.with({ status: 'NOT_STARTED' }, async match => {
+					const isUserInMatch = match.players.some(player => player.user.id === ctx.session.user.id);
+					if (!isUserInMatch) throw new MatchError({ code: 'NOT_IN_MATCH' });
+
+					await db.matchPlayer.delete({ where: { id: matchPlayer.id } });
+					return { success: true, matchId: match.id };
+				})
+				.exhaustive();
+		} catch (error) {
+			return { success: false, error: { code: getErrorCode(error), message: getErrorMessage(error) } };
+		}
+	}),
 	/** Starts current match at pitchId */
 	start: authorizedProcedure.input(z.object({ matchId: z.string() })).mutation(async ({ input, ctx }) => {
 		try {

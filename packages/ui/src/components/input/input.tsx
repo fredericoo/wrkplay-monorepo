@@ -6,7 +6,7 @@ const inputVariants = cva('flex rounded-2 transition-all duration-300 ease-expo-
 	variants: {
 		variant: {
 			default:
-				'border border-border-element-neutral bg-background-lowest caret-interactive-solid-primary ring-offset-2 file:border-0 file:bg-transparent file:body-sm placeholder:text-copy-lowcontrast-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-solid-hover-primary/50 disabled:cursor-not-allowed',
+				'border border-border-element-neutral bg-background-lowest caret-interactive-solid-primary shadow-none ring-interactive-solid-hover-primary/50 ring-offset-2 file:border-0 file:bg-transparent file:body-sm placeholder:text-copy-lowcontrast-neutral focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed',
 		},
 		size: {
 			unsized: '',

@@ -22,6 +22,7 @@
 		"@wrkplay/configs": "workspace:*",
 		"@wrkplay/core": "workspace:*",
 		"@wrkplay/ui": "workspace:*",
+		"capacitor-plugin-safe-area": "^2.0.5",
 		"framer-motion": "^10.12.16",
 		"localforage": "^1.10.0",
 		"match-sorter": "^6.3.1",

@@ -17,7 +17,7 @@ export const IndexPage = () => {
 				<Link to="/join-match">Join match</Link>
 			</Button>
 
-			<section className="flex w-full max-w-md flex-col gap-8 rounded-5 border border-border-subtle-neutral bg-background-subtle-neutral p-2">
+			<section className="flex w-full max-w-md flex-col gap-8">
 				<h1 className="text-center heading-lg">Recent matches</h1>
 				{match(matches)
 					.with([], () => (
@@ -28,7 +28,7 @@ export const IndexPage = () => {
 						/>
 					))
 					.otherwise(matches => (
-						<ol className="flex w-full max-w-md flex-col gap-4">
+						<ol className="flex w-full max-w-md flex-col gap-6">
 							{matches.map(match => (
 								<li key={match.id}>
 									<HistoricalMatch match={match} />

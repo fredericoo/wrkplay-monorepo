@@ -11,3 +11,7 @@ export * as ContentSwitcher from './content-switcher/content-switcher';
 export { Input } from './input/input';
 
 export { Calendar } from './calendar/calendar';
+
+export { Tabbar } from './tabbar/tabbar';
+
+export * from './avatar/avatar';

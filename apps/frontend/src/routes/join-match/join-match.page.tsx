@@ -16,12 +16,14 @@ export const JoinMatchPage = () => {
 	const timeAtRender = new Date();
 
 	return (
-		<div className="container flex flex-col items-center gap-4 py-8">
-			<div className="flex w-full max-w-md flex-col gap-2">
-				<h1 className="text-center heading-lg">Join Match</h1>
+		<div className="container flex flex-col items-center gap-8 py-8">
+			<section className="flex w-full max-w-md flex-col gap-6">
+				<div className="flex flex-col gap-2">
+					<h1 className="text-center heading-lg">Join Match</h1>
+					<p className="text-center text-copy-lowcontrast-neutral body-md">Scan the NFC tag or enter its code below:</p>
+				</div>
 
-				<p className="text-center text-copy-lowcontrast-neutral body-md">Scan the NFC tag or enter its code below:</p>
-				<Form className="flex flex-col gap-2" method="POST">
+				<Form className="flex flex-col gap-3" method="POST">
 					<Input
 						autoCapitalize="off"
 						autoComplete="off"
@@ -30,30 +32,41 @@ export const JoinMatchPage = () => {
 						name="joinTag"
 						placeholder="Enter code"
 					/>
-					<Button intent="primary">Join</Button>
+					<div className="flex gap-1">
+						<Button asChild className="flex-1" intent="ghost">
+							<Link to="/">Cancel</Link>
+						</Button>
+						<Button className="flex-1" intent="primary">
+							Join
+						</Button>
+					</div>
 				</Form>
 
 				{JSON.stringify(response)}
-			</div>
+			</section>
 
 			<AnimatePresence>
 				<Deferred data={pendingMatches} errorElement={null} loadingElement={null}>
 					{pendingMatches => {
 						if (pendingMatches.length === 0) return null;
 						return (
-							<motion.div
+							<motion.section
 								key="leftoff"
 								initial={{ scale: 0.9, opacity: 0 }}
 								animate={{ scale: 1, opacity: 1 }}
 								className="flex w-full max-w-md flex-col gap-4"
 							>
-								<p className="text-center text-copy-lowcontrast-neutral body-sm">or</p>
+								<div className="flex items-center gap-2">
+									<div className="h-[1px] flex-1 bg-border-subtle-neutral" />
+									<p className="flex-shrink-0 text-center text-copy-lowcontrast-neutral body-sm">or</p>
+									<div className="h-[1px] flex-1 bg-border-subtle-neutral" />
+								</div>
 								<h2 className="text-center heading-md">continue where you left off</h2>
 								<ul className="flex flex-col gap-2">
 									{pendingMatches.map(match => (
 										<li
 											key={match.id}
-											className="flex items-center gap-4 rounded-4 border border-border-subtle-neutral bg-background-subtle-neutral px-6 py-4"
+											className="flex items-center gap-4 rounded-4 border border-border-subtle-neutral bg-background-subtle-neutral px-5 py-4"
 										>
 											<div className="flex-grow overflow-hidden">
 												<p className="truncate label-md">
@@ -71,7 +84,7 @@ export const JoinMatchPage = () => {
 										</li>
 									))}
 								</ul>
-							</motion.div>
+							</motion.section>
 						);
 					}}
 				</Deferred>

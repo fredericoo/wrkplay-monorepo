@@ -18,6 +18,10 @@ const ActionSchema = z.union([
 		intent: z.literal('end'),
 	}),
 	z.object({
+		intent: z.literal('leave'),
+		matchPlayerId: z.string(),
+	}),
+	z.object({
 		intent: z.literal('update_score'),
 		score: z.coerce.number(),
 		side: z.enum(['SIDE_A', 'SIDE_B']),
@@ -37,19 +41,25 @@ export const matchAction = makeAction(async ({ request, params }) => {
 
 		const response = await match(data)
 			.with({ intent: 'ready' }, async ({ matchPlayerId }) => {
-				return await api.match.ready.mutate({ matchPlayerId });
+				return await api.match.ready.mutate({ matchPlayerId }, { signal: request.signal });
+			})
+			.with({ intent: 'leave' }, async ({ matchPlayerId }) => {
+				return await api.match.leave
+					.mutate({ matchPlayerId }, { signal: request.signal })
+					.then(() => redirect('/'))
+					.catch(error => error);
 			})
 			.with({ intent: 'start' }, async () => {
-				return await api.match.start.mutate({ matchId });
+				return await api.match.start.mutate({ matchId }, { signal: request.signal });
 			})
 			.with({ intent: 'end' }, async () => {
-				const response = await api.match.end.mutate({ matchId });
+				const response = await api.match.end.mutate({ matchId }, { signal: request.signal });
 				if (response.success) return redirect('/');
 				return response;
 			})
 			.with({ intent: 'update_score' }, async ({ score, side }) => {
 				console.log('UPDATING SCORE');
-				return await api.match.updateScore.mutate({ matchId, score, side });
+				return await api.match.updateScore.mutate({ matchId, score, side }, { signal: request.signal });
 			})
 			.exhaustive();
 

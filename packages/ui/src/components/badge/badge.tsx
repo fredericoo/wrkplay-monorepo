@@ -3,14 +3,14 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { ComponentPropsWithoutRef } from 'react';
 import { cn } from '../../../lib/utils';
 
-const badgeStyles = cva('truncate rounded-full px-3 py-1 text-center label-xs', {
+const badgeStyles = cva('truncate rounded-full px-3 py-0.5 text-center shadow-surface-sm body-sm', {
 	variants: {
 		variant: {
-			outline: 'bg-background-lowest text-copy-highcontrast-neutral ring-1 ring-border-subtle-neutral',
-			primary: 'bg-interactive-solid-primary text-copy-inverted',
-			positive: 'bg-interactive-solid-positive text-copy-highcontrast-positive',
-			negative: 'bg-interactive-solid-negative text-copy-inverted',
-			warning: 'bg-interactive-solid-warning text-copy-highcontrast-warning',
+			outline: 'bg-background-lowest text-copy-lowcontrast-neutral ring-1 ring-border-element-neutral/30',
+			primary: 'bg-background-subtle-primary text-copy-lowcontrast-primary ring-1 ring-border-element-primary/5',
+			positive: 'bg-background-subtle-positive text-copy-lowcontrast-positive ring-1 ring-border-element-positive/30',
+			negative: 'bg-background-subtle-negative text-copy-lowcontrast-negative ring-1 ring-border-element-negative/5',
+			warning: 'bg-background-subtle-warning text-copy-lowcontrast-warning ring-1 ring-border-element-warning/5',
 		},
 	},
 	defaultVariants: {

@@ -11,6 +11,9 @@ export const pxToRem = (px: number) => `${px / 16}rem`;
 
 export const utilsPlugin = plugin(({ addUtilities }) => {
 	addUtilities({
+		'.touch-callout-none': {
+			WebkitTouchCallout: 'none',
+		},
 		'.hide-scrollbars': {
 			'&::-webkit-scrollbar': {
 				display: 'none',

@@ -32,18 +32,33 @@ export const MatchPage = () => {
 	return match(currentMatch)
 		.with({ status: 'NOT_STARTED' }, () => {
 			const areAllPlayersReady = currentMatch.players.every(x => x.state === 'READY');
-
+			const maxPlayersPerSide = Math.max(playersBySide.SIDE_A?.length ?? 0, playersBySide.SIDE_B?.length ?? 0);
 			return (
-				<div className="container flex flex-col gap-8 py-8">
-					<div className="grid gap-8 md:grid-cols-2">
-						<MatchJoinSide label="Side A" players={playersBySide.SIDE_A} />
-						<MatchJoinSide label="Side B" players={playersBySide.SIDE_B} />
+				<div className="container flex max-w-md flex-grow flex-col gap-8 py-8">
+					<div className="flex flex-grow flex-col gap-8">
+						<MatchJoinSide
+							teamSize={maxPlayersPerSide}
+							className="flex-1"
+							label="Side A"
+							players={playersBySide.SIDE_A}
+						/>
+						<MatchJoinSide
+							teamSize={maxPlayersPerSide}
+							className="flex-1"
+							label="Side B"
+							players={playersBySide.SIDE_B}
+						/>
 					</div>
 
 					{!!response && 'error' in response && JSON.stringify(response.error)}
 
 					<Form method="POST" className="flex items-center justify-center gap-2 pb-safe-bottom">
 						<input type="hidden" name="matchPlayerId" value={me.id} />
+
+						<Button name="intent" intent="ghost" value="leave">
+							Leave
+						</Button>
+
 						<Button name="intent" intent={me.state === 'READY' ? 'secondary' : 'positive'} value="ready">
 							{me.state === 'READY' ? 'Not Ready' : 'Ready'}
 						</Button>

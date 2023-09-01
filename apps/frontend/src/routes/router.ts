@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { NavigationLayout } from '~/domains/common/components/navigation-layout';
 import { ErrorView } from '~/domains/error/components';
 import { rootLoader } from '~/routes/__root/__root.loader';
 import { RootPage } from '~/routes/__root/__root.page';
@@ -26,19 +27,24 @@ export const router = createBrowserRouter([
 		},
 		children: [
 			{
-				path: '/',
-				loader: indexLoader,
-				ErrorBoundary: ErrorView,
-				Component: IndexPage,
+				Component: NavigationLayout,
+				children: [
+					{
+						path: '/',
+						loader: indexLoader,
+						ErrorBoundary: ErrorView,
+						Component: IndexPage,
+					},
+					{
+						path: '/users',
+						loader: usersLoader,
+						action: usersAction,
+						ErrorBoundary: ErrorView,
+						Component: UsersPage,
+					},
+					{ path: '/join-match', loader: joinMatchLoader, Component: JoinMatchPage, action: joinMatchAction },
+				],
 			},
-			{
-				path: '/users',
-				loader: usersLoader,
-				action: usersAction,
-				ErrorBoundary: ErrorView,
-				Component: UsersPage,
-			},
-			{ path: '/join-match', loader: joinMatchLoader, Component: JoinMatchPage, action: joinMatchAction },
 			{ path: '/match/:matchId', loader: matchLoader, Component: MatchPage, action: matchAction },
 		],
 	},

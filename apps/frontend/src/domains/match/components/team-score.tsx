@@ -24,7 +24,7 @@ export const TeamScore = ({ side, score, controls, className, ...props }: TeamSc
 				</Button>
 			)}
 
-			<p className="flex-grow display-sm">
+			<p className="flex-grow tabular-nums display-sm">
 				<AnimatedText animateInitial={false}>{score.toString()}</AnimatedText>
 			</p>
 
