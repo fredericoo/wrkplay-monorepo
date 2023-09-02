@@ -1,6 +1,6 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
-import { IoBanOutline, IoSkull } from 'react-icons/io5';
+import { IoArrowBack, IoBanOutline, IoSkull } from 'react-icons/io5';
 import { Form, Link, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
@@ -32,6 +32,7 @@ export const MatchPage = () => {
 	return match(currentMatch)
 		.with({ status: 'NOT_STARTED' }, () => {
 			const areAllPlayersReady = currentMatch.players.every(x => x.state === 'READY');
+			const isThereEnoughPlayers = currentMatch.players.length >= 2;
 			const maxPlayersPerSide = Math.max(playersBySide.SIDE_A?.length ?? 0, playersBySide.SIDE_B?.length ?? 0);
 			return (
 				<div className="container flex max-w-md flex-grow flex-col gap-8 py-8">
@@ -56,14 +57,27 @@ export const MatchPage = () => {
 						<input type="hidden" name="matchPlayerId" value={me.id} />
 
 						<Button name="intent" intent="ghost" value="leave">
+							<IoArrowBack />
 							Leave
 						</Button>
 
-						<Button name="intent" intent={me.state === 'READY' ? 'secondary' : 'positive'} value="ready">
+						<Button
+							className="flex-1"
+							name="intent"
+							intent={me.state === 'READY' ? 'secondary' : 'positive'}
+							value="ready"
+						>
 							{me.state === 'READY' ? 'Not Ready' : 'Ready'}
 						</Button>
 
-						<Button type="submit" name="intent" value="start" intent="primary" disabled={!areAllPlayersReady}>
+						<Button
+							className="flex-1"
+							type="submit"
+							name="intent"
+							value="start"
+							intent="primary"
+							disabled={!areAllPlayersReady || !isThereEnoughPlayers}
+						>
 							Start match
 						</Button>
 					</Form>

@@ -8,6 +8,11 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
+	[data-platform='ios'] a,
+	[data-platform='ios'] img {
+		@apply touch-callout-none;
+	}
+
 	body {
 		@apply h-full bg-background-app text-copy-highcontrast-neutral;
 	}

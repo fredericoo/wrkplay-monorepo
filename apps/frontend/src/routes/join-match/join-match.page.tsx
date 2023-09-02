@@ -17,10 +17,10 @@ export const JoinMatchPage = () => {
 
 	return (
 		<div className="container flex flex-col items-center gap-8 py-8">
-			<section className="flex w-full max-w-md flex-col gap-6">
-				<div className="flex flex-col gap-2">
-					<h1 className="text-center heading-lg">Join Match</h1>
-					<p className="text-center text-copy-lowcontrast-neutral body-md">Scan the NFC tag or enter its code below:</p>
+			<section className="flex w-full max-w-md flex-col gap-4">
+				<div>
+					<h1 className="display-2xs">Join a match</h1>
+					<p className="text-copy-lowcontrast-neutral body-md">Scan the NFC tag or enter its code below:</p>
 				</div>
 
 				<Form className="flex flex-col gap-3" method="POST">
@@ -32,7 +32,7 @@ export const JoinMatchPage = () => {
 						name="joinTag"
 						placeholder="Enter code"
 					/>
-					<div className="flex gap-1">
+					<div className="flex gap-2">
 						<Button asChild className="flex-1" intent="ghost">
 							<Link to="/">Cancel</Link>
 						</Button>

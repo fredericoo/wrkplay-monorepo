@@ -1,5 +1,3 @@
-import { Button } from '@wrkplay/ui';
-import { Link } from 'react-router-dom';
 import { useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
 
@@ -13,12 +11,8 @@ export const IndexPage = () => {
 
 	return (
 		<div className="container flex flex-col items-center gap-8 py-8">
-			<Button intent="primary" asChild>
-				<Link to="/join-match">Join match</Link>
-			</Button>
-
 			<section className="flex w-full max-w-md flex-col gap-8">
-				<h1 className="text-center heading-lg">Recent matches</h1>
+				<h1 className="display-2xs">All recent matches</h1>
 				{match(matches)
 					.with([], () => (
 						<MessageView

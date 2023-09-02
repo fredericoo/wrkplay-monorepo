@@ -3,18 +3,71 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { ComponentPropsWithoutRef } from 'react';
 import { cn } from '../../../lib/utils';
 
-const badgeStyles = cva('truncate rounded-full px-3 py-0.5 text-center shadow-surface-sm body-sm', {
+const badgeStyles = cva('truncate rounded-full px-3 py-0.5 text-center body-sm', {
 	variants: {
 		variant: {
-			outline: 'bg-background-lowest text-copy-lowcontrast-neutral ring-1 ring-border-element-neutral/30',
-			primary: 'bg-background-subtle-primary text-copy-lowcontrast-primary ring-1 ring-border-element-primary/5',
-			positive: 'bg-background-subtle-positive text-copy-lowcontrast-positive ring-1 ring-border-element-positive/30',
-			negative: 'bg-background-subtle-negative text-copy-lowcontrast-negative ring-1 ring-border-element-negative/5',
-			warning: 'bg-background-subtle-warning text-copy-lowcontrast-warning ring-1 ring-border-element-warning/5',
+			default: '',
+			highContrast: '',
+		},
+		colorScheme: {
+			outline:
+				'bg-background-lowest text-copy-lowcontrast-neutral shadow-surface-sm ring-1 ring-border-element-neutral/30',
+			primary: '',
+			positive: '',
+			negative: '',
+			warning: '',
 		},
 	},
+	compoundVariants: [
+		{
+			variant: 'default',
+			colorScheme: 'primary',
+			className:
+				'bg-background-subtle-primary text-copy-lowcontrast-primary shadow-surface-sm ring-1 ring-border-element-primary/5',
+		},
+		{
+			variant: 'default',
+			colorScheme: 'positive',
+			className:
+				'bg-background-subtle-positive text-copy-lowcontrast-positive shadow-surface-sm ring-1 ring-border-element-positive/30',
+		},
+		{
+			variant: 'default',
+			colorScheme: 'negative',
+			className:
+				'bg-background-subtle-negative text-copy-lowcontrast-negative shadow-surface-sm ring-1 ring-border-element-negative/5',
+		},
+		{
+			variant: 'default',
+			colorScheme: 'warning',
+			className:
+				'bg-background-subtle-warning text-copy-lowcontrast-warning shadow-surface-sm ring-1 ring-border-element-warning/5',
+		},
+		/** High contrast */
+		{
+			variant: 'highContrast',
+			colorScheme: 'primary',
+			className: 'bg-background-strong-primary text-copy-inverted shadow-surface-inset',
+		},
+		{
+			variant: 'highContrast',
+			colorScheme: 'positive',
+			className: 'bg-background-strong-positive text-copy-highcontrast-positive shadow-surface-inset',
+		},
+		{
+			variant: 'highContrast',
+			colorScheme: 'negative',
+			className: 'bg-background-strong-negative text-copy-inverted shadow-surface-inset',
+		},
+		{
+			variant: 'highContrast',
+			colorScheme: 'warning',
+			className: 'bg-background-strong-warning text-copy-inverted shadow-surface-inset',
+		},
+	],
 	defaultVariants: {
-		variant: 'outline',
+		variant: 'default',
+		colorScheme: 'outline',
 	},
 });
 type BadgeVariants = VariantProps<typeof badgeStyles>;
@@ -24,11 +77,11 @@ export type BadgeProps = {
 } & BadgeVariants &
 	ComponentPropsWithoutRef<'span'>;
 
-export const Badge = ({ asChild, variant, children, className, ...props }: BadgeProps) => {
+export const Badge = ({ asChild, variant, colorScheme, children, className, ...props }: BadgeProps) => {
 	const Comp = asChild ? Slot : 'span';
 
 	return (
-		<Comp role="status" className={cn(badgeStyles({ variant }), className)} {...props}>
+		<Comp role="status" className={cn(badgeStyles({ variant, colorScheme }), className)} {...props}>
 			{children}
 		</Comp>
 	);

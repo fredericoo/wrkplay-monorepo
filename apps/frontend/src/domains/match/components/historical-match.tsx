@@ -14,7 +14,7 @@ export const HistoricalMatch = ({ match }: HistoricalMatchProps) => {
 
 	return (
 		<div className="relative rounded-4 bg-background-lowest px-4 pb-3 pt-7 shadow-surface-md ring-1 ring-border-element-primary/5">
-			<Badge className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" variant="primary">
+			<Badge className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" colorScheme="primary">
 				{match.pitch.venue.name}
 			</Badge>
 

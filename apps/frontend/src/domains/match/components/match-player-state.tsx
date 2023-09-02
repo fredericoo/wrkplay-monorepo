@@ -6,23 +6,24 @@ import type { MatchPlayer } from '../match.types';
 
 const stateToBadgeProps: Record<MatchPlayer['state'], BadgeProps> = {
 	NOT_READY: {
-		variant: 'outline',
+		colorScheme: 'outline',
 		children: 'Not ready',
 	},
 	READY: {
-		variant: 'positive',
+		colorScheme: 'positive',
+		variant: 'highContrast',
 		children: 'Ready',
 	},
 	VOTE_CANCEL: {
-		variant: 'negative',
+		colorScheme: 'negative',
 		children: 'Cancelling',
 	},
 	VOTE_DONE: {
-		variant: 'positive',
+		colorScheme: 'positive',
 		children: 'Done',
 	},
 	VOTE_FORFEIT: {
-		variant: 'negative',
+		colorScheme: 'negative',
 		children: 'Forfeiting',
 	},
 };

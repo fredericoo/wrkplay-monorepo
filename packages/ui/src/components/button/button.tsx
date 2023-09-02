@@ -4,13 +4,13 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 import { cn } from '../../../lib/utils';
 
 export const buttonVariants = cva(
-	'inline-flex items-center justify-center gap-2 truncate rounded-full ring-offset-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-solid-hover-primary/50 disabled:cursor-not-allowed disabled:opacity-25',
+	'inline-flex select-none items-center justify-center gap-2 truncate rounded-full ring-offset-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-solid-hover-primary/50 disabled:cursor-not-allowed disabled:opacity-25',
 	{
 		variants: {
 			size: {
 				unsized: '',
 				icon: 'h-8 w-8 text-[24px]',
-				md: 'px-6 py-2 label-sm',
+				md: 'px-6 py-2 label-md',
 			},
 
 			intent: {
@@ -25,7 +25,7 @@ export const buttonVariants = cva(
 				secondary: `bg-interactive-element-neutral text-copy-highcontrast-neutral hover:scale-hover
 				hover:bg-interactive-element-hover-neutral active:scale-active active:bg-interactive-element-active-neutral`,
 				ghost:
-					'hover:bg-interactive-element-hover-neutral active:scale-active active:bg-interactive-element-active-neutral',
+					'text-copy-lowcontrast-neutral hover:bg-interactive-element-hover-neutral hover:text-copy-highcontrast-neutral active:scale-active active:bg-interactive-element-active-neutral',
 				unstyled: '',
 			},
 		},

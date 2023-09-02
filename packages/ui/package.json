@@ -18,7 +18,8 @@
 		"react": "^18.2.0",
 		"react-icons": "^4.10.1",
 		"tailwindcss": "^3.3.3",
-		"typescript": "^5.0.4"
+		"typescript": "^5.0.4",
+		"framer-motion": "^10.12.16"
 	},
 	"dependencies": {
 		"@fontsource-variable/manrope": "^5.0.5",
@@ -36,13 +37,13 @@
 		"clsx": "^2.0.0",
 		"cmdk": "^0.2.0",
 		"date-fns": "^2.30.0",
-		"framer-motion": "^10.12.16",
 		"lucide-react": "^0.264.0",
 		"react-day-picker": "^8.8.0",
 		"tailwind-merge": "^1.14.0",
 		"tailwindcss-animate": "^1.0.6"
 	},
 	"peerDependencies": {
-		"react-icons": "^4.10.1"
+		"react-icons": "^4.10.1",
+		"framer-motion": "^10.12.16"
 	}
 }
