@@ -11,14 +11,14 @@ type NavbarProps = {
 
 export const Navbar = ({ user }: NavbarProps) => {
 	return (
-		<nav className="flex flex-shrink-0 items-center border-b border-border-subtle-neutral bg-background-lowest pt-safe-top">
+		<nav className="fixed left-0 right-0 top-0 z-50 flex h-16 flex-shrink-0 items-center border-b border-border-subtle-neutral bg-background-lowest pt-safe-top">
 			<div className="container flex items-center py-2">
 				<div className="flex-1" />
 				<div className="flex flex-1 items-center justify-center">
 					<Button intent="unstyled" className="-mx-1 p-1" asChild>
 						<Link to="/">
 							<img className="h-8 w-8" src={Logo} alt="wrkplay" />
-							<span className="font-bold tracking-tight text-icon-highContrast-neutral">workplay</span>
+							<span className="text-icon-highContrast-neutral font-bold tracking-tight">workplay</span>
 						</Link>
 					</Button>
 				</div>

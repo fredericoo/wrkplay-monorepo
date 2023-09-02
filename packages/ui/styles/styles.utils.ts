@@ -22,6 +22,7 @@ export const utilsPlugin = plugin(({ addUtilities }) => {
 			'-ms-overflow-style': 'none',
 		},
 		'.touch-hitbox': {
+			position: 'relative',
 			'&::before': {
 				content: "''",
 				position: 'absolute',

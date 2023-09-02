@@ -40,7 +40,7 @@ export const NavigationLayout = () => {
 					</Tabbar.Item>
 				</Link>
 			</Tabbar.Container>
-			<main className="flex flex-grow flex-col pb-24">
+			<main className="flex flex-grow flex-col pb-24 pt-16">
 				<Outlet />
 			</main>
 		</>

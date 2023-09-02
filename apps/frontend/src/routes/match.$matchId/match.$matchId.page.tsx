@@ -35,8 +35,8 @@ export const MatchPage = () => {
 			const isThereEnoughPlayers = currentMatch.players.length >= 2;
 			const maxPlayersPerSide = Math.max(playersBySide.SIDE_A?.length ?? 0, playersBySide.SIDE_B?.length ?? 0);
 			return (
-				<div className="container flex max-w-md flex-grow flex-col gap-8 py-8">
-					<div className="flex flex-grow flex-col gap-8">
+				<div className="container flex max-w-md flex-grow flex-col gap-4 py-4">
+					<div className="flex flex-grow flex-col gap-8 pt-safe-top">
 						<MatchJoinSide
 							teamSize={maxPlayersPerSide}
 							className="flex-1"
@@ -86,8 +86,8 @@ export const MatchPage = () => {
 		})
 		.with({ status: 'STARTED' }, () => {
 			return (
-				<div className="container flex flex-grow flex-col gap-8 py-8">
-					<div className="grid flex-grow gap-8 text-center md:grid-cols-2">
+				<div className="container flex flex-grow flex-col gap-4 py-4">
+					<div className="grid flex-grow gap-4 pt-safe-top text-center md:grid-cols-2">
 						<div
 							aria-label="Side A"
 							className="flex flex-col items-center rounded-6 border border-border-subtle-neutral bg-background-subtle-neutral px-4 py-2"
