@@ -6,6 +6,7 @@ const envVariables = z.object({
 	DATABASE_URL: z.string(),
 	GITHUB_CLIENT_ID: z.string(),
 	GITHUB_CLIENT_SECRET: z.string(),
+	AUTH_REDIRECT_URL: z.string(),
 });
 
 export const ENV = envVariables.parse(process.env);

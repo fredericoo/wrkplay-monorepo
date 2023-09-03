@@ -43,7 +43,7 @@ app.get('/login/github', async () => {
 
 app.get('/login/github/callback', async context => {
 	const storedState = getCookie(context, 'github_oauth_state');
-	const redirectUrl = 'http://localhost:3000';
+	const redirectUrl = ENV.AUTH_REDIRECT_URL;
 	const { code, state } = context.req.query();
 	// validate state
 	if (!storedState || !state || storedState !== state || typeof code !== 'string') {
