@@ -1,15 +1,20 @@
 import { SplashScreen } from '@capacitor/splash-screen';
 import { SafeArea } from 'capacitor-plugin-safe-area';
-import { makeLoader } from 'react-router-typesafe';
+import { makeLoader, redirect } from 'react-router-typesafe';
 
 import { api } from '~/domains/api/api.client';
 
 export const rootLoader = makeLoader(async () => {
-	const userId = localStorage.getItem('token')?.toString();
 	const safeArea = await SafeArea.getSafeAreaInsets();
 	await SplashScreen.hide();
 
-	const user = userId ? (await api.user.getById.query(userId)) ?? null : null;
-
-	return { user, safeArea };
+	try {
+		console.log('requesting user with cookie', document.cookie);
+		const user = await api.user.me.query();
+		return { user, safeArea };
+	} catch (e) {
+		console.log('failed user', e);
+		console.error(e);
+		return redirect('/login');
+	}
 });

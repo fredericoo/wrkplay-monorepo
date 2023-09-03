@@ -32,11 +32,32 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  avatar_url String?
+
+  github_username String?
+
   name        String
   role        UserRole          @default(GUEST)
   permissions VenuePermission[]
 
-  plays MatchPlayer[]
+  plays    MatchPlayer[]
+  sessions Session[]
+  keys     Key[]
+}
+
+model Session {
+  id             String @id
+  user_id        String
+  user           User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  active_expires BigInt
+  idle_expires   BigInt
+}
+
+model Key {
+  id              String  @id @default(dbgenerated("uuid7()")) @db.VarChar(36)
+  user_id         String
+  user            User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  hashed_password String?
 }
 
 enum Permission {

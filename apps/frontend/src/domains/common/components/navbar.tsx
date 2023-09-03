@@ -11,8 +11,8 @@ type NavbarProps = {
 
 export const Navbar = ({ user }: NavbarProps) => {
 	return (
-		<nav className="fixed left-0 right-0 top-0 z-50 flex h-16 flex-shrink-0 items-center border-b border-border-subtle-neutral bg-background-lowest pt-safe-top">
-			<div className="container flex items-center py-2">
+		<nav className="fixed left-0 right-0 top-0 z-50 flex flex-shrink-0 items-center border-b border-border-subtle-neutral bg-background-lowest pt-safe-top">
+			<div className="container flex h-16 items-center">
 				<div className="flex-1" />
 				<div className="flex flex-1 items-center justify-center">
 					<Button intent="unstyled" className="-mx-1 p-1" asChild>

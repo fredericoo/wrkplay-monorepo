@@ -7,6 +7,9 @@ import { db } from '../domains/db/db.client';
 import { publicProcedure, router } from '../trpc';
 
 export const userRouter = router({
+	me: authorizedProcedure.query(async ({ ctx }) => {
+		return await db.user.findUnique({ where: { id: ctx.session.user.userId } });
+	}),
 	getById: authorizedProcedure.input(z.string()).query(async ({ input }) => {
 		return await db.user.findUnique({ where: { id: input } });
 	}),

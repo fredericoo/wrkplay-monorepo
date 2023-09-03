@@ -6,6 +6,7 @@ declare global {
 	var __db: PrismaClient | undefined;
 }
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 if (process.env.NODE_ENV === 'production') {
 	db = new PrismaClient();
 	void db.$connect();

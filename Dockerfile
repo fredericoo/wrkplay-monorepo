@@ -8,6 +8,7 @@ LABEL fly_launch_runtime="NodeJS/Prisma"
 
 # Set production environment
 RUN npm i -g pnpm
+RUN npm i -g bun
 
 WORKDIR /app
 # COPY patches patches
@@ -18,7 +19,7 @@ RUN apt-get update -y && apt-get install -y openssl
 RUN cd apps/backend && pnpm install --frozen-lockfile
 RUN cd apps/backend && pnpm prisma generate
 
-ENV NODE_ENV=production
+ENV MODE=production
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/app/docker-entrypoint"]

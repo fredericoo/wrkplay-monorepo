@@ -39,7 +39,7 @@ export const HistoricalMatch = ({ match }: HistoricalMatchProps) => {
 					<div aria-label="Side A" className="flex-1 label-lg">
 						{match.sideAScore}
 					</div>
-					<div className="text-icon-lowContrast-neutral">×</div>
+					<div className="text-icon-lowcontrast-neutral">×</div>
 					<div aria-label="Side B" className="flex-1 label-lg">
 						{match.sideBScore}
 					</div>

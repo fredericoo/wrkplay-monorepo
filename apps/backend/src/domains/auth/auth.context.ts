@@ -1,15 +1,16 @@
 import type { inferAsyncReturnType } from '@trpc/server';
-import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone';
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 
-export const createContext = async (opts: CreateHTTPContextOptions) => {
-	const session = opts.req.headers.authorization
-		? { user: { id: opts.req.headers.authorization.replace('Bearer ', '') } }
-		: undefined;
+import { auth } from './auth.service';
+
+export const createContext = async ({ req, resHeaders }: FetchCreateContextFnOptions) => {
+	const authRequest = auth.handleRequest(req);
+	const session = await authRequest.validate();
 
 	return {
-		req: opts.req,
-		res: opts.res,
 		session,
+		req,
+		resHeaders,
 	};
 };
 
