@@ -45,8 +45,11 @@ app.get('/login/github/callback', async context => {
 	const storedState = getCookie(context, 'github_oauth_state');
 	const redirectUrl = ENV.AUTH_REDIRECT_URL;
 	const { code, state } = context.req.query();
+	const requestUrl = new URL(context.req.url);
+
 	// validate state
 	if (!storedState || !state || storedState !== state || typeof code !== 'string') {
+		console.error('Missing one of', storedState, state, code);
 		return context.text('Bad request', 400);
 	}
 	try {
@@ -72,6 +75,8 @@ app.get('/login/github/callback', async context => {
 		});
 
 		const sessionCookie = auth.createSessionCookie(session);
+		sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
+
 		context.res.headers.set('Set-Cookie', sessionCookie.serialize());
 		return context.html(`
 			<!DOCTYPE html>
