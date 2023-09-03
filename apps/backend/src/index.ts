@@ -22,14 +22,16 @@ app.get('/health', c => {
 	return c.json({ status: 'healthy', timestamp: Date.now() });
 });
 
-app.get('/login/github', async () => {
+app.get('/login/github', async c => {
 	const [url, state] = await githubAuth.getAuthorizationUrl();
+	const requestUrl = new URL(c.req.url);
 
 	const stateCookie = serializeCookie('github_oauth_state', state, {
 		httpOnly: true,
 		secure: ENV.MODE === 'production',
 		path: '/',
 		maxAge: 60 * 60,
+		domain: requestUrl.host.replace('api.', ''),
 	});
 
 	return new Response(null, {
