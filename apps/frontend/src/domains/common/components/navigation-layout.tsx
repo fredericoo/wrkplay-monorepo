@@ -1,6 +1,7 @@
 import { Button, Tabbar } from '@wrkplay/ui';
 import { IoFlame, IoFlameOutline, IoPersonCircle, IoPersonCircleOutline } from 'react-icons/io5';
 import { Link, Outlet, useRouteLoaderData } from 'react-router-dom';
+import type { useLoaderData } from 'react-router-typesafe';
 
 import { useOptimisticLocation } from '~/domains/routing/routing.hooks';
 import type { rootLoader } from '~/routes/__root/__root.loader';
@@ -8,7 +9,7 @@ import type { rootLoader } from '~/routes/__root/__root.loader';
 import { Navbar } from './navbar';
 
 export const NavigationLayout = () => {
-	const { user } = useRouteLoaderData('root') as Awaited<ReturnType<typeof rootLoader>>;
+	const { user } = useRouteLoaderData('root') as ReturnType<typeof useLoaderData<typeof rootLoader>>;
 	const { pathname } = useOptimisticLocation();
 
 	return (
@@ -40,9 +41,11 @@ export const NavigationLayout = () => {
 					</Tabbar.Item>
 				</Link>
 			</Tabbar.Container>
-			<main className="flex flex-grow flex-col pb-24 pt-16">
-				<Outlet />
-			</main>
+			<div className="flex flex-grow flex-col pb-safe-bottom pt-safe-top">
+				<main className="flex flex-grow flex-col py-16">
+					<Outlet />
+				</main>
+			</div>
 		</>
 	);
 };

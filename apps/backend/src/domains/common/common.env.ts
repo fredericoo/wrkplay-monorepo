@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 /** Required env variables to start the app. */
 const envVariables = z.object({
-	NODE_ENV: z.enum(['development', 'production', 'test']),
+	MODE: z.enum(['development', 'production']),
 	DATABASE_URL: z.string(),
 	GITHUB_CLIENT_ID: z.string(),
 	GITHUB_CLIENT_SECRET: z.string(),

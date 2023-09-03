@@ -1,4 +1,3 @@
-import { Button } from '@wrkplay/ui';
 import { Form } from 'react-router-dom';
 import { match } from 'ts-pattern';
 
@@ -17,9 +16,6 @@ export const UserList = ({ users }: UserListProps) => {
 					{users.map(user => (
 						<li className="flex items-center gap-2" key={user.id}>
 							<span className="flex-grow truncate label-md">{user.name}</span>{' '}
-							<Button type="submit" name="userId" value={user.id} size="md" intent="secondary">
-								Impersonate
-							</Button>
 						</li>
 					))}
 				</ol>

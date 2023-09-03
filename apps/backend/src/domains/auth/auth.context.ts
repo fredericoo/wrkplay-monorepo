@@ -1,9 +1,11 @@
-import type { AnyRouter, inferAsyncReturnType } from '@trpc/server';
-import type { FetchCreateContextFn } from '@trpc/server/adapters/fetch';
+import type { inferAsyncReturnType } from '@trpc/server';
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 
-export const createContext: FetchCreateContextFn<AnyRouter> = async ({ req, resHeaders }) => {
-	const authHeader = req.headers.get('authorization');
-	const session = authHeader ? { user: { id: authHeader.replace('Bearer ', '') } } : undefined;
+import { auth } from './auth.service';
+
+export const createContext = async ({ req, resHeaders }: FetchCreateContextFnOptions) => {
+	const authRequest = auth.handleRequest(req);
+	const session = await authRequest.validate();
 
 	return {
 		session,

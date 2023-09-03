@@ -1,5 +1,5 @@
 import type { AvatarFallbackVariants, AvatarProps } from '@wrkplay/ui';
-import { Avatar, AvatarFallback } from '@wrkplay/ui';
+import { Avatar, AvatarFallback, AvatarImage } from '@wrkplay/ui';
 
 import { getInitials } from '../user.utils';
 
@@ -12,7 +12,7 @@ export const strToHashedNumber = (inputString: string) =>
 		.map(char => char.charCodeAt(0))
 		.join('');
 
-type UserAvatarProps = { user: { name: string } } & AvatarProps;
+type UserAvatarProps = { user: { name: string; avatar_url?: string } } & AvatarProps;
 
 const colorSchemesAvailable: NonNullable<AvatarFallbackVariants['variant']>[] = [1, 2, 3, 4];
 
@@ -21,6 +21,7 @@ export const UserAvatar = ({ user, ...props }: UserAvatarProps) => {
 		1) as AvatarFallbackVariants['variant'];
 	return (
 		<Avatar {...props}>
+			{user.avatar_url && <AvatarImage src={user.avatar_url} />}
 			<AvatarFallback variant={variant}>{getInitials(user.name)}</AvatarFallback>
 		</Avatar>
 	);
