@@ -9,11 +9,9 @@ export const rootLoader = makeLoader(async () => {
 	await SplashScreen.hide();
 
 	try {
-		console.log('requesting user with cookie', document.cookie);
 		const user = await api.user.me.query();
 		return { user, safeArea };
 	} catch (e) {
-		console.log('failed user', e);
 		console.error(e);
 		return redirect('/login');
 	}

@@ -9,7 +9,6 @@ import { IndexPage } from '~/routes/_index/_index.page';
 import { joinMatchAction } from '~/routes/join-match/join-match.action';
 import { joinMatchLoader } from '~/routes/join-match/join-match.loader';
 import { JoinMatchPage } from '~/routes/join-match/join-match.page';
-import { loginLoader } from '~/routes/login/login.loader';
 import { LoginPage } from '~/routes/login/login.page';
 import { matchAction } from '~/routes/match.$matchId/match.$matchId.action';
 import { matchLoader } from '~/routes/match.$matchId/match.$matchId.loader';
@@ -21,7 +20,6 @@ import { UsersPage } from '~/routes/users/users.page';
 export const router = createBrowserRouter([
 	{
 		path: '/login',
-		loader: loginLoader,
 		Component: LoginPage,
 	},
 	{

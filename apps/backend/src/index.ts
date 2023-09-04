@@ -31,7 +31,7 @@ app.get('/login/github', async c => {
 		secure: ENV.MODE === 'production',
 		path: '/',
 		maxAge: 60 * 60,
-		domain: requestUrl.host.replace('api.', ''),
+		// domain: requestUrl.host.replace('api.', ''),
 	});
 
 	return new Response(null, {
@@ -77,7 +77,7 @@ app.get('/login/github/callback', async context => {
 		});
 
 		const sessionCookie = auth.createSessionCookie(session);
-		sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
+		// sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
 
 		context.res.headers.set('Set-Cookie', sessionCookie.serialize());
 		return context.html(`

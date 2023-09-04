@@ -1,19 +1,26 @@
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser';
 import { CapacitorCookies } from '@capacitor/core';
 import { Button } from '@wrkplay/ui';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLoaderData } from 'react-router-typesafe';
+import type { MouseEventHandler } from 'react';
+import { Link } from 'react-router-dom';
 
-import type { loginLoader } from './login.loader';
+import Logo from '~/assets/logo.png';
+import { ENV } from '~/domains/common/common.env';
+import { usePlatform } from '~/domains/native/native.hooks';
 
 export const LoginPage = () => {
-	const navigate = useNavigate();
-	const sheet = useLoaderData<typeof loginLoader>();
-	const [sessionId, setSessionId] = useState<string>();
+	const platform = usePlatform();
 
-	useEffect(() => {
+	const loginUrl = new URL(ENV.VITE_BACKEND_URL);
+	loginUrl.pathname = '/login/github';
+
+	const handleLogin: MouseEventHandler = e => {
+		if (platform === 'web') return;
+		e.preventDefault();
+		const sheet = InAppBrowser.create(loginUrl.toString(), '_blank', {
+			location: 'no',
+		});
 		sheet.on('message').subscribe(async e => {
-			setSessionId(e.data);
 			await CapacitorCookies.setCookie({
 				key: 'auth_session',
 				value: e.data.sessionId,
@@ -22,15 +29,18 @@ export const LoginPage = () => {
 
 			sheet.close();
 		});
-	}, [navigate, sheet]);
+	};
 
 	return (
-		<div className="container flex h-full flex-grow flex-col items-center gap-4">
-			<p className="text-icon-highcontrast-neutral body-md">Logging you in…</p>
-			<p>{JSON.stringify(sessionId)}</p>
-			<p>{document.cookie}</p>
+		<div className="container flex h-full flex-grow flex-col items-center justify-center gap-8">
+			<div className="flex items-center gap-2">
+				<img className="h-8 w-8" src={Logo} alt="wrkplay" />
+				<h1 className="display-2xs">workplay</h1>
+			</div>
 			<Button asChild>
-				<Link to="/">Back</Link>
+				<Link to={loginUrl.toString()} onClick={handleLogin}>
+					Sign in with github
+				</Link>
 			</Button>
 		</div>
 	);
