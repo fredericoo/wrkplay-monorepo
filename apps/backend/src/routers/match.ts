@@ -136,7 +136,11 @@ export const matchRouter = router({
 			if (isSideFull) throw new MatchError({ code: 'SIDE_FULL' });
 
 			await db.matchPlayer.create({
-				data: { matchId: existingMatch.id, userId: ctx.session.user.id, side },
+				data: {
+					match: { connect: { id: existingMatch.id } },
+					user: { connect: { id: ctx.session.user.userId } },
+					side,
+				},
 			});
 			return { success: true as const, matchId: existingMatch.id };
 		} catch (error) {

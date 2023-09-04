@@ -6,5 +6,5 @@ declare namespace Lucia {
 		name: string;
 		avatar_url: string;
 	};
-	type DatabaseSessionAttributes = {};
+	type DatabaseSessionAttributes = { _: never };
 }

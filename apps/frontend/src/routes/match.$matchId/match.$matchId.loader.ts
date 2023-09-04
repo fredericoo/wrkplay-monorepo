@@ -11,12 +11,11 @@ const ParamsSchema = z.object({
 });
 
 export const matchLoader = makeLoader(async ({ params }) => {
-	const userId = localStorage.getItem('token');
 	const { matchId } = ParamsSchema.parse(params);
 
 	try {
 		const { match } = await api.match.getById.query({ matchId });
-		return { match, userId };
+		return { match };
 	} catch (error) {
 		console.error(error);
 

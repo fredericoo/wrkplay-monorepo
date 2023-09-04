@@ -3,8 +3,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { IoArrowForward } from 'react-icons/io5';
 import { Form, Link } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
+import { match, P } from 'ts-pattern';
 
 import { Deferred } from '~/domains/common/components';
+import { InlineError } from '~/domains/error/components/inline-error';
 import { getRelativeTimeDifference } from '~/domains/format/format.date';
 
 import type { joinMatchAction } from './join-match.action';
@@ -41,8 +43,9 @@ export const JoinMatchPage = () => {
 						</Button>
 					</div>
 				</Form>
-
-				{JSON.stringify(response)}
+				{match(response)
+					.with({ error: { message: P.string } }, match => <InlineError>{match.error.message}</InlineError>)
+					.otherwise(() => null)}
 			</section>
 
 			<AnimatePresence>

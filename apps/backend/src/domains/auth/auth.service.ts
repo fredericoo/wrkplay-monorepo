@@ -13,6 +13,7 @@ export const auth = lucia({
 		expires: false,
 	},
 	adapter: prisma(db),
+	getUserAttributes: user => user,
 });
 
 export type Auth = typeof auth;

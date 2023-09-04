@@ -1,22 +1,25 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
 import { IoArrowBack, IoBanOutline, IoSkull } from 'react-icons/io5';
-import { Form, Link, useSubmit } from 'react-router-dom';
+import { Form, Link, useRouteLoaderData, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
-import { match } from 'ts-pattern';
+import { match, P } from 'ts-pattern';
 
 import { groupBy } from '~/domains/common/common.utils';
 import { MessageView } from '~/domains/common/components/message-view';
+import { InlineError } from '~/domains/error/components/inline-error';
 import { MatchJoinSide } from '~/domains/match/components/match-join-side';
 import { TeamScore } from '~/domains/match/components/team-score';
 
+import type { rootLoader } from '../__root/__root.loader';
 import type { matchAction } from './match.$matchId.action';
 import type { matchLoader } from './match.$matchId.loader';
 
 export const MatchPage = () => {
-	const { match: currentMatch, userId } = useLoaderData<typeof matchLoader>();
+	const { user } = useRouteLoaderData('root') as ReturnType<typeof useLoaderData<typeof rootLoader>>;
+	const { match: currentMatch } = useLoaderData<typeof matchLoader>();
 	const playersBySide = groupBy(currentMatch.players, x => x.side);
-	const me = currentMatch.players.find(x => x.user.id === userId);
+	const me = currentMatch.players.find(x => x.user.id === user.id);
 	if (!me) throw new Error('You’re not in this match');
 
 	const submit = useSubmit();
@@ -51,7 +54,9 @@ export const MatchPage = () => {
 						/>
 					</div>
 
-					{!!response && 'error' in response && JSON.stringify(response.error)}
+					{match(response)
+						.with({ error: { message: P.string } }, match => <InlineError>{match.error.message}</InlineError>)
+						.otherwise(() => null)}
 
 					<Form method="POST" className="flex items-center justify-center gap-2 pb-safe-bottom">
 						<input type="hidden" name="matchPlayerId" value={me.id} />
@@ -117,7 +122,10 @@ export const MatchPage = () => {
 							/>
 						</div>
 					</div>
-					{!!response && 'error' in response && JSON.stringify(response.error)}
+					{match(response)
+						.with({ error: { message: P.string } }, match => <InlineError>{match.error.message}</InlineError>)
+						.otherwise(() => null)}
+
 					<Form method="POST" className="flex justify-center gap-2 pb-safe-bottom">
 						<Button className="flex-1 truncate" type="submit" name="intent" value="end" intent="positive">
 							Finish
