@@ -4,6 +4,8 @@ import { match } from 'ts-pattern';
 import type { api } from '~/domains/api/api.client';
 import { MessageView } from '~/domains/common/components/message-view';
 
+import { UserAvatar } from '.';
+
 type UserListProps = {
 	users: Awaited<ReturnType<typeof api.user.list.query>>;
 };
@@ -15,7 +17,7 @@ export const UserList = ({ users }: UserListProps) => {
 				<ol className="flex flex-col gap-4 rounded-4 border border-border-subtle-neutral bg-background-subtle-neutral p-4">
 					{users.map(user => (
 						<li className="flex items-center gap-2" key={user.id}>
-							<span className="flex-grow truncate label-md">{user.name}</span>{' '}
+							<UserAvatar user={user} /> <span className="flex-grow truncate label-md">{user.name}</span>{' '}
 						</li>
 					))}
 				</ol>
