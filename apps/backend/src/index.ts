@@ -31,7 +31,7 @@ app.get('/login/github', async c => {
 		secure: ENV.MODE === 'production',
 		path: '/',
 		maxAge: 60 * 60,
-		// domain: requestUrl.host.replace('api.', ''),
+		domain: ENV.MODE === 'production' ? requestUrl.host.replace('api.', '') : undefined,
 	});
 
 	return new Response(null, {
@@ -77,7 +77,9 @@ app.get('/login/github/callback', async context => {
 		});
 
 		const sessionCookie = auth.createSessionCookie(session);
-		// sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
+		if (ENV.MODE === 'production') {
+			sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
+		}
 
 		context.res.headers.set('Set-Cookie', sessionCookie.serialize());
 		return context.html(`
@@ -117,7 +119,7 @@ const appRouter = router({
 
 app.use(
 	'/trpc/*',
-	cors({ origin: ['http://localhost:3000', 'capacitor://localhost'], credentials: true }),
+	cors({ origin: ['http://localhost:3000', 'capacitor://localhost', 'https://workplay.app'], credentials: true }),
 	trpcServer({
 		router: appRouter,
 		createContext,
