@@ -94,7 +94,9 @@ app.get('/login/github/callback', async context => {
 						const stringifiedMessageObj = JSON.stringify(messageObj);
 						webkit?.messageHandlers?.cordova_iab?.postMessage(stringifiedMessageObj);
 
-						window.location = '${redirectUrl}';
+						setTimeout(() => {
+							window.location.replace('${redirectUrl}');
+						}, 500);
 					</script>
 				</head>
 				<body>

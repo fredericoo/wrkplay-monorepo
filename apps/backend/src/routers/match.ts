@@ -25,6 +25,7 @@ export const matchRouter = router({
 							id: true,
 							user: {
 								select: {
+									avatar_url: true,
 									id: true,
 									name: true,
 								},
@@ -58,6 +59,7 @@ export const matchRouter = router({
 						id: true,
 						user: {
 							select: {
+								avatar_url: true,
 								name: true,
 							},
 						},
@@ -81,6 +83,7 @@ export const matchRouter = router({
 						select: {
 							user: {
 								select: {
+									avatar_url: true,
 									name: true,
 								},
 							},
