@@ -13,9 +13,8 @@ export const auth = lucia({
 		expires: false,
 	},
 	adapter: prisma(db),
-	csrfProtection: {
-		allowedSubDomains: '*',
-	},
+	// TODO: csrf protection
+	csrfProtection: false,
 	getUserAttributes: user => user,
 });
 
