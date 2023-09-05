@@ -128,7 +128,7 @@ app.use(
 	}),
 );
 
-console.log(`🤖 wrkplay backend listening on port ${PORT}`);
+console.log(`🤖 workplay backend listening on port ${PORT}`);
 export type AppRouter = typeof appRouter;
 
 export default {

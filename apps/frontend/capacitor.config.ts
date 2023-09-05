@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-	appId: 'app.wrkplay.app',
-	appName: 'wrkplay',
+	appId: 'app.workplay.app',
+	appName: 'workplay',
 	webDir: 'dist',
 	server: {
 		androidScheme: 'https',
