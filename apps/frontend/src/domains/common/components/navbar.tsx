@@ -1,12 +1,12 @@
 import { Button } from '@wrkplay/ui';
 import { Link } from 'react-router-dom';
 
-import { UserAvatar } from '~/domains/user/components';
+import { UserMenu } from '~/domains/user/components';
 
 import Logo from '../../../assets/logo.png';
 
 type NavbarProps = {
-	user: { name: string } | null;
+	user: { name: string; avatar_url?: string } | null;
 };
 
 export const Navbar = ({ user }: NavbarProps) => {
@@ -23,7 +23,7 @@ export const Navbar = ({ user }: NavbarProps) => {
 					</Button>
 				</div>
 
-				<div className="flex flex-1 justify-end">{user && <UserAvatar user={user} size="sm" />}</div>
+				<div className="flex flex-1 items-center justify-end">{user && <UserMenu user={user} />}</div>
 			</div>
 		</nav>
 	);

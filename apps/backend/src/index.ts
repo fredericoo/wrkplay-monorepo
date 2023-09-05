@@ -4,6 +4,7 @@ import { cors } from 'hono/cors';
 
 import { createContext } from './domains/auth/auth.context';
 import { authRouter } from './domains/auth/auth.router';
+import { CORS_OPTIONS } from './domains/common/common.constants';
 import { matchRouter } from './domains/match/match.router';
 import { userRouter } from './domains/user/user.router';
 import { router } from './trpc';
@@ -25,7 +26,7 @@ const appRouter = router({
 
 app.use(
 	'/trpc/*',
-	cors({ origin: ['http://localhost:3000', 'capacitor://localhost', 'https://workplay.app'], credentials: true }),
+	cors(CORS_OPTIONS),
 	trpcServer({
 		router: appRouter,
 		createContext,

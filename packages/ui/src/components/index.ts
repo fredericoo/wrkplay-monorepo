@@ -15,3 +15,5 @@ export { Calendar } from './calendar/calendar';
 export { Tabbar } from './tabbar/tabbar';
 
 export * from './avatar/avatar';
+
+export * from './dropdown-menu/dropdown-menu';

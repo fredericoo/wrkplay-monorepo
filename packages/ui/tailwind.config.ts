@@ -1,6 +1,8 @@
 import { textStylesPlugin } from './styles/styles.typography';
 import { Config } from 'tailwindcss/types/config';
 import { utilsPlugin } from './styles/styles.utils';
+// @ts-expect-error - there are no types
+import animate from 'tailwindcss-animate';
 
 const config: Config = {
 	content: ['../../packages/ui/src/components/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
@@ -198,7 +200,7 @@ const config: Config = {
 		},
 	},
 
-	plugins: [textStylesPlugin, utilsPlugin],
+	plugins: [textStylesPlugin, utilsPlugin, animate],
 };
 
 export default config;

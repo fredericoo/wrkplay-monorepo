@@ -1,13 +1,17 @@
 import { OAuthRequestError } from '@lucia-auth/oauth';
 import { Hono } from 'hono';
 import { getCookie } from 'hono/cookie';
+import { cors } from 'hono/cors';
 import { serializeCookie } from 'lucia/utils';
 
+import { CORS_OPTIONS } from '../common/common.constants';
 import { ENV } from '../common/common.env';
 import { nanoid } from '../common/common.utils';
 import { auth, githubAuth } from './auth.service';
 
 export const authRouter = new Hono();
+
+authRouter.use('*', cors(CORS_OPTIONS));
 
 authRouter.get('/login/github', async c => {
 	const [url, state] = await githubAuth.getAuthorizationUrl();
@@ -102,4 +106,26 @@ authRouter.get('/login/github/callback', async context => {
 		}
 		return context.text('An unknown error occurred', 500);
 	}
+});
+
+authRouter.post('/logout', async c => {
+	const redirectUrl = ENV.AUTH_REDIRECT_URL;
+	const authRequest = auth.handleRequest(c.req.raw);
+
+	const session = await authRequest.validate();
+	if (!session) {
+		return new Response('Unauthorized', {
+			status: 401,
+		});
+	}
+
+	await auth.invalidateSession(session.sessionId);
+	const sessionCookie = auth.createSessionCookie(null);
+	return new Response(null, {
+		headers: {
+			Location: redirectUrl,
+			'Set-Cookie': sessionCookie.serialize(),
+		},
+		status: 302,
+	});
 });
