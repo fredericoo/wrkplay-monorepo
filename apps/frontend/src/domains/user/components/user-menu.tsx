@@ -5,7 +5,7 @@ import { Form } from 'react-router-dom';
 import { UserAvatar } from '~/domains/user/components';
 
 export type UserMenuProps = {
-	user: { name: string; avatar_url?: string };
+	user: { name: string; avatar_url?: string | null };
 };
 
 export const UserMenu = ({ user }: UserMenuProps) => {
