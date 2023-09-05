@@ -161,7 +161,7 @@ model MatchPlayer {
 }
 
 model JoinTag {
-  id String @id @default(dbgenerated("nanoid(6)")) @db.VarChar(6)
+  id String @id @default(dbgenerated("number_id(6)")) @db.VarChar(6)
 
   pitchId String
   pitch   Pitch     @relation(fields: [pitchId], references: [id], onDelete: Cascade)
