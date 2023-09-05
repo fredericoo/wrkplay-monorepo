@@ -1,7 +1,7 @@
 import { textStylesPlugin } from './styles/styles.typography';
 import { Config } from 'tailwindcss/types/config';
 import { utilsPlugin } from './styles/styles.utils';
-// @ts-expect-error - there are no types
+// @ts-ignore - no typerinos
 import animate from 'tailwindcss-animate';
 
 const config: Config = {
