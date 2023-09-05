@@ -12,7 +12,7 @@ export const strToHashedNumber = (inputString: string) =>
 		.map(char => char.charCodeAt(0))
 		.join('');
 
-type UserAvatarProps = { user: { name: string; avatar_url?: string } } & AvatarProps;
+type UserAvatarProps = { user: { name: string; avatar_url?: string | null } } & AvatarProps;
 
 const colorSchemesAvailable: NonNullable<AvatarFallbackVariants['variant']>[] = [1, 2, 3, 4];
 
