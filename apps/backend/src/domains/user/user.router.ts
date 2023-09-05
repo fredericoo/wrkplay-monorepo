@@ -1,10 +1,10 @@
 import { CursorPaginationSchema } from '@wrkplay/core';
 import { z } from 'zod';
 
-import { authorizedProcedure } from '../domains/auth/auth.middleware';
-import { getCursorPagination } from '../domains/common/common.utils';
-import { db } from '../domains/db/db.client';
-import { publicProcedure, router } from '../trpc';
+import { publicProcedure, router } from '../../trpc';
+import { authorizedProcedure } from '../auth/auth.middleware';
+import { getCursorPagination } from '../common/common.utils';
+import { db } from '../db/db.client';
 
 export const userRouter = router({
 	me: authorizedProcedure.query(async ({ ctx }) => {
@@ -18,7 +18,7 @@ export const userRouter = router({
 		return await db.user.findMany({
 			...pagination,
 			orderBy: { id: 'asc' },
-			select: { id: true, name: true },
+			select: { id: true, name: true, avatar_url: true },
 		});
 	}),
 	pendingMatches: authorizedProcedure

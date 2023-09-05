@@ -2,12 +2,12 @@ import { CursorPaginationSchema, MatchError } from '@wrkplay/core';
 import { match, P } from 'ts-pattern';
 import { z } from 'zod';
 
-import { authorizedProcedure } from '../domains/auth/auth.middleware';
-import { getCursorPagination } from '../domains/common/common.utils';
-import { db } from '../domains/db/db.client';
-import { getErrorCode, getErrorMessage } from '../domains/error/error.utils';
-import { findPendingMatch } from '../domains/match/match.utils';
-import { router } from '../trpc';
+import { router } from '../../trpc';
+import { authorizedProcedure } from '../auth/auth.middleware';
+import { getCursorPagination } from '../common/common.utils';
+import { db } from '../db/db.client';
+import { getErrorCode, getErrorMessage } from '../error/error.utils';
+import { findPendingMatch } from './match.utils';
 
 export const matchRouter = router({
 	getById: authorizedProcedure.input(z.object({ matchId: z.string() })).query(async ({ input }) => {

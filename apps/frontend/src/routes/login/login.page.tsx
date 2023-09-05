@@ -12,7 +12,7 @@ export const LoginPage = () => {
 	const platform = usePlatform();
 
 	const loginUrl = new URL(ENV.VITE_BACKEND_URL);
-	loginUrl.pathname = '/login/github';
+	loginUrl.pathname = '/auth/login/github';
 
 	const handleLogin: MouseEventHandler = e => {
 		if (platform === 'web') return;

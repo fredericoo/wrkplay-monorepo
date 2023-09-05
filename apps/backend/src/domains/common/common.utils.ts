@@ -1,7 +1,10 @@
 import type { CursorPaginationSchema } from '@wrkplay/core';
 import { DEFAULT_PAGE_SIZE } from '@wrkplay/core';
+import { customAlphabet } from 'nanoid';
 import { match, P } from 'ts-pattern';
 import type { z } from 'zod';
+
+export const nanoid = customAlphabet('1234567890qwertyuiopasdfghjklzxcvbnmQWEASDZXCRTYFGHVBNUIOPJKLM!@$*', 12);
 
 /** Gets parameters for prisma cursor-based pagination, from CursorPaginationSchema compatible schemas */
 export const getCursorPagination = (input?: z.infer<typeof CursorPaginationSchema>) =>
