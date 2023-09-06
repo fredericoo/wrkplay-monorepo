@@ -38,7 +38,7 @@ export const IndexPage = () => {
 					{matches => (
 						<div className="flex flex-col gap-8">
 							{match(matches.status)
-								.with('fresh', () => (
+								.with('stale-error', () => (
 									<p className="flex items-center gap-2 rounded-2 bg-background-subtle-warning px-3 py-2 text-copy-highcontrast-warning ring-1 ring-border-subtle-warning">
 										<IoInformationCircleOutline className="h-6 w-6 text-icon-highcontrast-warning" />
 										<span className="body-sm">This list may be out of date, please refresh to try again.</span>
