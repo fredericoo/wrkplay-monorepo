@@ -7,5 +7,7 @@ export const usersLoader = makeLoader(async ({ request }) => {
 	const searchParams = new URLSearchParams(request.url);
 	const search = CursorPaginationSchema.parse(Object.fromEntries(searchParams.entries()));
 
-	return defer({ users: api.user.list.query(search) });
+	return defer({
+		users: api.user.list.query(search),
+	});
 });

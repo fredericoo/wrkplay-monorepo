@@ -1,9 +1,10 @@
-import { MatchError } from '@wrkplay/core';
+import { CursorPaginationSchema, MatchError } from '@wrkplay/core';
 import { makeAction, redirect } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
 import { z } from 'zod';
 
 import { api } from '~/domains/api/api.client';
+import { markAsStale } from '~/domains/common/common.cache';
 import { isInstanceOf } from '~/domains/common/common.utils';
 
 const ActionSchema = z.union([
@@ -54,7 +55,11 @@ export const matchAction = makeAction(async ({ request, params }) => {
 			})
 			.with({ intent: 'end' }, async () => {
 				const response = await api.match.end.mutate({ matchId }, { signal: request.signal });
-				if (response.success) return redirect('/');
+				if (response.success) {
+					/** We mark the matches cache as stale. */
+					await markAsStale({ cacheKey: ['match.list', CursorPaginationSchema.parse({})] });
+					return redirect('/');
+				}
 				return response;
 			})
 			.with({ intent: 'update_score' }, async ({ score, side }) => {

@@ -1,4 +1,5 @@
 import { Skeleton } from '@wrkplay/ui';
+import { IoInformationCircleOutline } from 'react-icons/io5';
 import { useLoaderData } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
 
@@ -34,25 +35,35 @@ export const IndexPage = () => {
 					loadingElement={<MatchesSkeleton count={4} />}
 					errorElement={<ErrorView heading="Error loading matches" />}
 				>
-					{matches =>
-						match(matches)
-							.with([], () => (
-								<MessageView
-									headingLevel="h1"
-									heading="Ready for the first match"
-									message="Played matches will appear here"
-								/>
-							))
-							.otherwise(matches => (
-								<ol className="flex w-full max-w-md flex-col gap-6">
-									{matches.map(match => (
-										<li key={match.id}>
-											<HistoricalMatch match={match} />
-										</li>
-									))}
-								</ol>
-							))
-					}
+					{matches => (
+						<div className="flex flex-col gap-8">
+							{match(matches.status)
+								.with('fresh', () => (
+									<p className="flex items-center gap-2 rounded-2 bg-background-subtle-warning px-3 py-2 text-copy-highcontrast-warning ring-1 ring-border-subtle-warning">
+										<IoInformationCircleOutline className="h-6 w-6 text-icon-highcontrast-warning" />
+										<span className="body-sm">This list may be out of date, please refresh to try again.</span>
+									</p>
+								))
+								.otherwise(() => null)}
+							{match(matches.data)
+								.with([], () => (
+									<MessageView
+										headingLevel="h1"
+										heading="Ready for the first match"
+										message="Played matches will appear here"
+									/>
+								))
+								.otherwise(matches => (
+									<ol className="flex w-full max-w-md flex-col gap-6">
+										{matches.map(match => (
+											<li key={match.id}>
+												<HistoricalMatch match={match} />
+											</li>
+										))}
+									</ol>
+								))}
+						</div>
+					)}
 				</Deferred>
 			</section>
 		</div>
