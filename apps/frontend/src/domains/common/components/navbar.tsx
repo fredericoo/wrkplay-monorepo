@@ -6,7 +6,7 @@ import { UserMenu } from '~/domains/user/components';
 import Logo from '../../../assets/logo.png';
 
 type NavbarProps = {
-	user: { name: string; avatar_url?: string | null } | null;
+	user?: { name: string; avatar_url?: string | null } | null;
 };
 
 export const Navbar = ({ user }: NavbarProps) => {

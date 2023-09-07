@@ -48,6 +48,7 @@ export const router = createBrowserRouter([
 				],
 			},
 			{ path: '/match/:matchId', loader: matchLoader, Component: MatchPage, action: matchAction },
+			{ path: '/terms', lazy: () => import('./terms/index') },
 		],
 	},
 ]);
