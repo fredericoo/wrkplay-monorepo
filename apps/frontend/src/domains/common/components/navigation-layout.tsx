@@ -15,7 +15,7 @@ export const NavigationLayout = () => {
 	return (
 		<>
 			<Navbar user={user} />
-			<div className="fixed bottom-0 flex w-full justify-center">
+			<div className="fixed bottom-0 z-50 flex w-full justify-center">
 				<Tabbar.Container className="flex-shrink-0">
 					<Link className="flex flex-1" to="/">
 						<Tabbar.Item isActive={pathname === '/'} icon={{ active: <IoFlame />, inactive: <IoFlameOutline /> }}>
