@@ -9,7 +9,7 @@ const Container: React.FC<TabbarContainerProps> = ({ className, ...props }) => {
 	return (
 		<nav
 			className={cn(
-				'fixed bottom-0 left-0 right-0 z-50 flex w-full select-none bg-background-lowest pb-safe-bottom ring-1 ring-border-subtle-neutral',
+				'flex w-full max-w-xl select-none rounded-t-8 bg-background-lowest pb-safe-bottom shadow-surface-lg-inverted',
 				className,
 			)}
 			{...props}

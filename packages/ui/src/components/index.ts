@@ -19,3 +19,5 @@ export * from './avatar/avatar';
 export * from './dropdown-menu/dropdown-menu';
 
 export * from './skeleton/skeleton';
+
+export * from './dialog';

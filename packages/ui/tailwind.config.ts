@@ -32,6 +32,7 @@ const config: Config = {
 			widest: '0.06em',
 		},
 		colors: {
+			highlight: 'oklch(var(--highlight) / <alpha-value>)',
 			transparent: 'transparent',
 			background: {
 				lowest: 'hsl(var(--background) / <alpha-value>)',
@@ -195,6 +196,8 @@ const config: Config = {
 					'inset 0 0 0 1px white, 0px 1px 1px 0px rgba(109, 12, 42, 0.04), 0px 3px 3px 0px rgba(109, 12, 42, 0.03), 0px 6px 4px 0px rgba(109, 12, 42, 0.02), 0px 6px 4px 0px rgba(109, 12, 42,0.01)',
 				'surface-lg':
 					'inset 0 0 0 1px white, 0px 1px 1px 0px rgba(109, 12, 42, 0.04), 0px 3px 3px 0px rgba(109, 12, 42, 0.03), 0px 6px 4px 0px rgba(109, 12, 42, 0.02), 0px 11px 4px 0px rgba(109, 12, 42,0.01), 0px 32px 24px -12px rgba(109, 12, 42, 0.06)',
+				'surface-lg-inverted':
+					'inset 0 0 0 1px white, 0px 0px 1px 0px rgba(109, 12, 42, 0.04), 0px 0px 3px 0px rgba(109, 12, 42, 0.03), 0px 0px 4px 0px rgba(109, 12, 42, 0.02), 0px 0px 4px 0px rgba(109, 12, 42,0.01), 0px 0px 24px -12px rgba(109, 12, 42, 0.06)',
 				'surface-inset': 'inset 0 1px 1px 0 rgba(0, 0, 0, 0.1)',
 			},
 		},

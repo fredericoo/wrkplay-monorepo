@@ -27,6 +27,9 @@
 	}
 
 	:root {
+		/* this color is in oklch */
+		--highlight: 62.46% 0.266 12.04;
+
 		--mauve-1: 300 20% 99%;
 		--mauve-2: 300 7.7% 97.5%;
 		--mauve-3: 294 5.5% 95.3%;

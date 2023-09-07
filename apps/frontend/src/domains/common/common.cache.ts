@@ -53,7 +53,7 @@ export const fetchAndCache = async <T, E extends ErrorBehaviour>(
 		await set(cacheKey, dataToCache);
 		return { data: dataToCache.data, updatedAt: dataToCache.updatedAt, status: 'fresh' };
 	} catch (error) {
-		if (cacheOptions.onError === 'ignore') return undefined as any;
+		if (cacheOptions.onError === 'ignore') return undefined as HandledData<E, CacheDataWithStatus<T>>;
 		throw error;
 	}
 };
@@ -85,7 +85,6 @@ export const getFromCacheOrFetch = async <T>(
 		};
 
 	try {
-		await new Promise(resolve => setTimeout(resolve, 2000));
 		const data = await cacheOptions.fetchFn(cacheOptions.cacheKey);
 		const dataToCache: CacheData<T> = {
 			updatedAt: Date.now(),
