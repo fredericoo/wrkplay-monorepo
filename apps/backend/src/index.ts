@@ -7,6 +7,7 @@ import { authRouter } from './domains/auth/auth.router';
 import { CORS_OPTIONS } from './domains/common/common.constants';
 import { matchRouter } from './domains/match/match.router';
 import { userRouter } from './domains/user/user.router';
+import { venueRouter } from './domains/venue/venue.router';
 import { router } from './trpc';
 
 const PORT = 8080;
@@ -22,6 +23,7 @@ app.get('/health', c => {
 const appRouter = router({
 	user: userRouter,
 	match: matchRouter,
+	venue: venueRouter,
 });
 
 app.use(

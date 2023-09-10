@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { authRoutes } from '~/domains/auth/auth.routes';
 import { NavigationLayout } from '~/domains/common/components/navigation-layout';
 import { ErrorView } from '~/domains/error/components';
+import { venueRoutes } from '~/domains/venue/venue.routes';
 import { rootLoader } from '~/routes/__root/__root.loader';
 import { RootPage } from '~/routes/__root/__root.page';
 import { indexAction } from '~/routes/_index/_index.action';
@@ -47,6 +48,7 @@ export const router = createBrowserRouter([
 						Component: UsersPage,
 					},
 					{ path: '/join-match', loader: joinMatchLoader, Component: JoinMatchPage, action: joinMatchAction },
+					...venueRoutes,
 				],
 			},
 			{ path: '/match/:matchId', loader: matchLoader, Component: MatchPage, action: matchAction },

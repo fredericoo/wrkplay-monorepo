@@ -1,5 +1,5 @@
 import { Button, Tabbar } from '@wrkplay/ui';
-import { IoFlame, IoFlameOutline, IoPersonCircle, IoPersonCircleOutline } from 'react-icons/io5';
+import { IoFlame, IoFlameOutline, IoMap, IoMapOutline } from 'react-icons/io5';
 import { Link, Outlet, useRouteLoaderData } from 'react-router-dom';
 import type { useLoaderData } from 'react-router-typesafe';
 
@@ -19,7 +19,7 @@ export const NavigationLayout = () => {
 				<Tabbar.Container className="flex-shrink-0">
 					<Link className="flex flex-1" to="/">
 						<Tabbar.Item isActive={pathname === '/'} icon={{ active: <IoFlame />, inactive: <IoFlameOutline /> }}>
-							Matches
+							Hot
 						</Tabbar.Item>
 					</Link>
 					<div className="flex -translate-y-1/3 items-center">
@@ -33,12 +33,12 @@ export const NavigationLayout = () => {
 						</Button>
 					</div>
 
-					<Link className="flex flex-1" to="/users">
+					<Link className="flex flex-1" to="/venues">
 						<Tabbar.Item
-							isActive={pathname.includes('/users')}
-							icon={{ active: <IoPersonCircle />, inactive: <IoPersonCircleOutline /> }}
+							isActive={pathname.includes('/venues')}
+							icon={{ active: <IoMap />, inactive: <IoMapOutline /> }}
 						>
-							Users
+							Venues
 						</Tabbar.Item>
 					</Link>
 				</Tabbar.Container>
