@@ -1,156 +1,138 @@
 module.exports = {
-  extends: [
-    "turbo",
-    "prettier",
-    "@remix-run/eslint-config",
-    "@remix-run/eslint-config/node",
-    "plugin:import/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript",
-  ],
-  parser: "@typescript-eslint/parser",
-  plugins: [
-    "import",
-    "unused-imports",
-    "simple-import-sort",
-    "@typescript-eslint",
-  ],
+	extends: [
+		'turbo',
+		'prettier',
+		'@remix-run/eslint-config',
+		'@remix-run/eslint-config/node',
+		'plugin:import/recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:import/typescript',
+	],
+	parser: '@typescript-eslint/parser',
+	plugins: ['import', 'unused-imports', 'simple-import-sort', '@typescript-eslint'],
 
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: true,
-    tsconfigRootDir: __dirname,
-  },
-  settings: {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"],
-    },
-    "import/resolver": {
-      typescript: {
-        project: [
-          "tsconfig.json",
-          "packages/*/tsconfig.json",
-          "apps/*/tsconfig.json",
-        ],
-      },
-      node: {
-        project: [
-          "tsconfig.json",
-          "packages/*/tsconfig.json",
-          "apps/*/tsconfig.json",
-        ],
-      },
-    },
-  },
+	parserOptions: {
+		ecmaVersion: 'latest',
+		sourceType: 'module',
+		project: true,
+		tsconfigRootDir: __dirname,
+	},
+	settings: {
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.ts', '.tsx'],
+		},
+		'import/resolver': {
+			typescript: {
+				project: ['tsconfig.json', 'packages/*/tsconfig.json', 'apps/*/tsconfig.json'],
+			},
+			node: {
+				project: ['tsconfig.json', 'packages/*/tsconfig.json', 'apps/*/tsconfig.json'],
+			},
+		},
+	},
 
-  rules: {
-    /** No absolute imports */
-    "import/no-absolute-path": "error",
+	rules: {
+		'@typescript-eslint/no-explicit-any': 'off',
 
-    /** Ensures all imports appear before other statements */
-    "import/first": ["error"],
+		/** No absolute imports */
+		'import/no-absolute-path': 'error',
 
-    /** Ensures there’s an empty line between imports and other statements */
-    "import/newline-after-import": ["warn", { count: 1 }],
+		/** Ensures all imports appear before other statements */
+		'import/first': ['error'],
 
-    /** Sorts imports automatically */
-    "simple-import-sort/imports": "warn",
+		/** Ensures there’s an empty line between imports and other statements */
+		'import/newline-after-import': ['warn', { count: 1 }],
 
-    /** Ensures no unused imports are present, and only _ prefixed variables can be unused */
-    "no-unused-vars": "off",
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        varsIgnorePattern: "^_",
-        args: "after-used",
-        argsIgnorePattern: "^_",
-      },
-    ],
-    "unused-imports/no-unused-imports": "error",
-    "@typescript-eslint/no-misused-promises": "off",
+		/** Sorts imports automatically */
+		'simple-import-sort/imports': 'warn',
 
-    "no-restricted-syntax": [
-      "warn",
-      {
-        selector: "TSEnumDeclaration",
-        message:
-          "Don’t declare enums! Use string literal unions instead, they’re safer and more ergonomic.",
-      },
-    ],
+		/** Ensures no unused imports are present, and only _ prefixed variables can be unused */
+		'no-unused-vars': 'off',
+		'unused-imports/no-unused-vars': [
+			'warn',
+			{
+				vars: 'all',
+				varsIgnorePattern: '^_',
+				args: 'after-used',
+				argsIgnorePattern: '^_',
+			},
+		],
+		'unused-imports/no-unused-imports': 'error',
+		'@typescript-eslint/no-misused-promises': 'off',
 
-    "no-restricted-imports": [
-      "error",
-      {
-        paths: [
-          {
-            name: "react-router-dom",
-            importNames: ["defer"],
-            message:
-              "Please import defer from '~/domains/routing/routing.utils' instead.",
-          },
-          {
-            name: "react-router-dom",
-            importNames: ["useLoaderData"],
-            message:
-              "Please import useLoaderData from '~/domains/routing/routing.utils' instead.",
-          },
-          {
-            name: "react-router-dom",
-            importNames: ["useActionData"],
-            message:
-              "Please import useActionData from '~/domains/routing/routing.utils' instead.",
-          },
-        ],
-      },
-    ],
+		'no-restricted-syntax': [
+			'warn',
+			{
+				selector: 'TSEnumDeclaration',
+				message: 'Don’t declare enums! Use string literal unions instead, they’re safer and more ergonomic.',
+			},
+		],
 
-    "@typescript-eslint/no-unnecessary-condition": "warn",
-    "@typescript-eslint/no-unnecessary-type-arguments": "warn",
-    "@typescript-eslint/prefer-for-of": "warn",
-    "@typescript-eslint/prefer-function-type": "warn",
+		'no-restricted-imports': [
+			'error',
+			{
+				paths: [
+					{
+						name: 'react-router-dom',
+						importNames: ['defer'],
+						message: "Please import defer from '~/domains/routing/routing.utils' instead.",
+					},
+					{
+						name: 'react-router-dom',
+						importNames: ['useLoaderData'],
+						message: "Please import useLoaderData from '~/domains/routing/routing.utils' instead.",
+					},
+					{
+						name: 'react-router-dom',
+						importNames: ['useActionData'],
+						message: "Please import useActionData from '~/domains/routing/routing.utils' instead.",
+					},
+				],
+			},
+		],
 
-    /** Prefer types over interfaces */
-    "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+		'@typescript-eslint/no-unnecessary-condition': 'warn',
+		'@typescript-eslint/no-unnecessary-type-arguments': 'warn',
+		'@typescript-eslint/prefer-for-of': 'warn',
+		'@typescript-eslint/prefer-function-type': 'warn',
 
-    "@typescript-eslint/no-confusing-non-null-assertion": "error",
+		/** Prefer types over interfaces */
+		'@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
 
-    /** Standardises arrays. Simple arrays use brackets, complex arrays uses generic syntax
-     * @example - ❌ `const foo: Array<string> = [];`
-     * @example - ✅ `const foo: string[] = [];`
-     * @example - ❌ `const foo: ReturnType<typeof bar>[] = [];`
-     * @example - ✅ `const foo: Array<ReturnType<typeof bar>> = [];`
-     */
-    "@typescript-eslint/array-type": ["warn"],
+		'@typescript-eslint/no-confusing-non-null-assertion': 'error',
 
-    /** Enforces generics on the cunstructor, not as type annotation.
-     * @example - ❌ `const foo: Foo<string> = new Foo();`
-     * @example - ✅ `const foo = new Foo<string>();`
-     */
-    "@typescript-eslint/consistent-generic-constructors": [
-      "warn",
-      "constructor",
-    ],
+		/** Standardises arrays. Simple arrays use brackets, complex arrays uses generic syntax
+		 * @example - ❌ `const foo: Array<string> = [];`
+		 * @example - ✅ `const foo: string[] = [];`
+		 * @example - ❌ `const foo: ReturnType<typeof bar>[] = [];`
+		 * @example - ✅ `const foo: Array<ReturnType<typeof bar>> = [];`
+		 */
+		'@typescript-eslint/array-type': ['warn'],
 
-    /** Prefer Record<X,Y> over {[key: X]: Y} syntax */
-    "@typescript-eslint/consistent-indexed-object-style": ["warn", "record"],
+		/** Enforces generics on the cunstructor, not as type annotation.
+		 * @example - ❌ `const foo: Foo<string> = new Foo();`
+		 * @example - ✅ `const foo = new Foo<string>();`
+		 */
+		'@typescript-eslint/consistent-generic-constructors': ['warn', 'constructor'],
 
-    /** Already handled by unused-imports */
-    "@typescript-eslint/no-unused-vars": "off",
+		/** Prefer Record<X,Y> over {[key: X]: Y} syntax */
+		'@typescript-eslint/consistent-indexed-object-style': ['warn', 'record'],
 
-    /** React uses that a lot */
-    "@typescript-eslint/unbound-method": "off",
+		/** Already handled by unused-imports */
+		'@typescript-eslint/no-unused-vars': 'off',
 
-    "@typescript-eslint/ban-ts-comment": [
-      "error",
-      {
-        "ts-expect-error": "allow-with-description",
-        "ts-ignore": true,
-        "ts-nocheck": true,
-        "ts-check": false,
-        minimumDescriptionLength: 5,
-      },
-    ],
-  },
+		/** React uses that a lot */
+		'@typescript-eslint/unbound-method': 'off',
+
+		'@typescript-eslint/ban-ts-comment': [
+			'error',
+			{
+				'ts-expect-error': 'allow-with-description',
+				'ts-ignore': true,
+				'ts-nocheck': true,
+				'ts-check': false,
+				minimumDescriptionLength: 5,
+			},
+		],
+	},
 };

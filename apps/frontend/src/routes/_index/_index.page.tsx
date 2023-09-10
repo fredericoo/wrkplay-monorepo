@@ -1,5 +1,6 @@
-import { Skeleton } from '@wrkplay/ui';
-import { IoInformationCircleOutline } from 'react-icons/io5';
+import { Button, Skeleton } from '@wrkplay/ui';
+import { IoInformationCircleOutline, IoRefresh } from 'react-icons/io5';
+import { Form } from 'react-router-dom';
 import { useLoaderData } from 'react-router-typesafe';
 import { match, P } from 'ts-pattern';
 
@@ -28,7 +29,14 @@ export const IndexPage = () => {
 	return (
 		<div className="container flex flex-col items-center gap-8 py-8">
 			<section className="flex w-full max-w-md flex-col gap-8">
-				<h1 className="display-2xs">All recent matches</h1>
+				<header className="flex gap-4">
+					<h1 className="flex-grow truncate display-2xs">All recent matches</h1>
+					<Form method="POST">
+						<Button size="icon" aria-label="Refresh" intent="ghost" type="submit">
+							<IoRefresh />
+						</Button>
+					</Form>
+				</header>
 
 				<SWR
 					data={matches}

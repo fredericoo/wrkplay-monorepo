@@ -2,6 +2,7 @@ import { prisma } from '@lucia-auth/adapter-prisma';
 import { github } from '@lucia-auth/oauth/providers';
 import { lucia } from 'lucia';
 import { web } from 'lucia/middleware';
+import { match, P } from 'ts-pattern';
 
 import { ENV } from '../common/common.env';
 import { db } from '../db/db.client';
@@ -20,7 +21,11 @@ export const auth = lucia({
 
 export type Auth = typeof auth;
 
-export const githubAuth = github(auth, {
-	clientId: ENV.GITHUB_CLIENT_ID,
-	clientSecret: ENV.GITHUB_CLIENT_SECRET,
-});
+export const githubAuth = match(ENV)
+	.with({ GITHUB_CLIENT_ID: P.string, GITHUB_CLIENT_SECRET: P.string }, e =>
+		github(auth, {
+			clientId: e.GITHUB_CLIENT_ID,
+			clientSecret: e.GITHUB_CLIENT_SECRET,
+		}),
+	)
+	.otherwise(() => null);

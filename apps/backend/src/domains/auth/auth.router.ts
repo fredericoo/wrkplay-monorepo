@@ -14,6 +14,7 @@ export const authRouter = new Hono();
 authRouter.use('*', cors(CORS_OPTIONS));
 
 authRouter.get('/login/github', async c => {
+	if (!githubAuth) return c.notFound();
 	const [url, state] = await githubAuth.getAuthorizationUrl();
 	const requestUrl = new URL(c.req.url);
 
@@ -34,16 +35,17 @@ authRouter.get('/login/github', async c => {
 	});
 });
 
-authRouter.get('/login/github/callback', async context => {
-	const storedState = getCookie(context, 'github_oauth_state');
+authRouter.get('/login/github/callback', async c => {
+	if (!githubAuth) return c.notFound();
+	const storedState = getCookie(c, 'github_oauth_state');
 	const redirectUrl = ENV.AUTH_REDIRECT_URL;
-	const { code, state } = context.req.query();
-	const requestUrl = new URL(context.req.url);
+	const { code, state } = c.req.query();
+	const requestUrl = new URL(c.req.url);
 
 	// validate state
 	if (!storedState || !state || storedState !== state || typeof code !== 'string') {
 		console.error('Missing one of', storedState, state, code);
-		return context.text('Bad request', 400);
+		return c.text('Bad request', 400);
 	}
 	try {
 		const { getExistingUser, githubUser, createUser } = await githubAuth.validateCallback(code);
@@ -72,8 +74,8 @@ authRouter.get('/login/github/callback', async context => {
 			sessionCookie.attributes.domain = requestUrl.host.replace('api.', '');
 		}
 
-		context.res.headers.set('Set-Cookie', sessionCookie.serialize());
-		return context.html(`
+		c.res.headers.set('Set-Cookie', sessionCookie.serialize());
+		return c.html(`
 			<!DOCTYPE html>
 			<html>
 				<head>
@@ -102,9 +104,9 @@ authRouter.get('/login/github/callback', async context => {
 		console.error(e);
 		if (e instanceof OAuthRequestError) {
 			// invalid code
-			return context.text('Bad request', 400);
+			return c.text('Bad request', 400);
 		}
-		return context.text('An unknown error occurred', 500);
+		return c.text('An unknown error occurred', 500);
 	}
 });
 

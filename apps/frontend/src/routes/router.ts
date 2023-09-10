@@ -5,6 +5,7 @@ import { NavigationLayout } from '~/domains/common/components/navigation-layout'
 import { ErrorView } from '~/domains/error/components';
 import { rootLoader } from '~/routes/__root/__root.loader';
 import { RootPage } from '~/routes/__root/__root.page';
+import { indexAction } from '~/routes/_index/_index.action';
 import { indexLoader } from '~/routes/_index/_index.loader';
 import { IndexPage } from '~/routes/_index/_index.page';
 import { joinMatchAction } from '~/routes/join-match/join-match.action';
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
 					{
 						path: '/',
 						loader: indexLoader,
+						action: indexAction,
 						ErrorBoundary: ErrorView,
 						Component: IndexPage,
 					},

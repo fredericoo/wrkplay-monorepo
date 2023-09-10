@@ -1,4 +1,4 @@
-import { del, get, set, update } from 'idb-keyval';
+import { idbDataCache } from '~/domains/common/common.idb';
 
 export type CacheData<T> = {
 	updatedAt: number;
@@ -11,27 +11,22 @@ export type CacheDataWithStatus<T> = CacheData<T> & {
 	status: CacheStatus;
 };
 
-type CacheKeyInput = string | string[] | (string | object)[];
-
 export type ErrorBehaviour = 'throw' | 'ignore';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CacheOptions<TData = any, TError extends ErrorBehaviour = 'throw' | 'ignore'> = {
 	/** Time which the data is made stale and replaced in cache. */
 	staleTimeMs: number;
-	cacheKey: CacheKeyInput;
-	fetchFn: (cacheKey: CacheKeyInput) => Promise<TData>;
+	cacheKey: IDBValidKey[];
+	fetchFn: (cacheKey: IDBValidKey[]) => Promise<TData>;
 	onError: TError;
 };
-
-const getIDBCacheKey = (input: CacheKeyInput): string => JSON.stringify(input);
 
 /** Gets data from cache given a key, if there’s data. */
 export const getFromCache = async <T>(
 	cacheOptions: Pick<CacheOptions<T>, 'cacheKey' | 'staleTimeMs'>,
 ): Promise<CacheDataWithStatus<T> | undefined> => {
-	const cacheKey = getIDBCacheKey(cacheOptions.cacheKey);
-	const cachedData: CacheData<T> | undefined = await get(cacheKey);
+	const cachedData: CacheData<T> | undefined = await idbDataCache.get(cacheOptions.cacheKey);
+
 	if (!cachedData) return undefined;
 
 	const isCacheValid = Date.now() - cachedData.updatedAt > cacheOptions.staleTimeMs;
@@ -43,14 +38,13 @@ export type HandledData<E extends ErrorBehaviour, T> = E extends 'ignore' ? T | 
 export const fetchAndCache = async <T, E extends ErrorBehaviour>(
 	cacheOptions: CacheOptions<T, E>,
 ): Promise<HandledData<E, CacheDataWithStatus<T>>> => {
-	const cacheKey = getIDBCacheKey(cacheOptions.cacheKey);
 	try {
 		const data = await cacheOptions.fetchFn(cacheOptions.cacheKey);
 		const dataToCache: CacheData<T> = {
 			updatedAt: Date.now(),
 			data,
 		};
-		await set(cacheKey, dataToCache);
+		await idbDataCache.set(cacheOptions.cacheKey, dataToCache);
 		return { data: dataToCache.data, updatedAt: dataToCache.updatedAt, status: 'fresh' };
 	} catch (error) {
 		if (cacheOptions.onError === 'ignore') return undefined as HandledData<E, CacheDataWithStatus<T>>;
@@ -73,8 +67,8 @@ export const swr = async <T, E extends ErrorBehaviour>(cacheOptions: CacheOption
 export const getFromCacheOrFetch = async <T>(
 	cacheOptions: CacheOptions<T>,
 ): Promise<CacheData<T> & { status: 'fresh' | 'stale' | 'stale-error' }> => {
-	const cacheKey = getIDBCacheKey(cacheOptions.cacheKey);
-	const cachedData: CacheData<T> | undefined = await get(cacheKey);
+	const cachedData: CacheData<T> | undefined = await idbDataCache.get(cacheOptions.cacheKey);
+
 	const isCacheValid = !cachedData || Date.now() - cachedData.updatedAt > cacheOptions.staleTimeMs;
 
 	if (!isCacheValid)
@@ -86,11 +80,13 @@ export const getFromCacheOrFetch = async <T>(
 
 	try {
 		const data = await cacheOptions.fetchFn(cacheOptions.cacheKey);
-		const dataToCache: CacheData<T> = {
+
+		const dataToCache = {
 			updatedAt: Date.now(),
 			data,
-		};
-		await set(cacheKey, dataToCache);
+		} satisfies CacheData<T>;
+
+		await idbDataCache.set(cacheOptions.cacheKey, dataToCache);
 
 		return {
 			updatedAt: dataToCache.updatedAt,
@@ -98,6 +94,7 @@ export const getFromCacheOrFetch = async <T>(
 			status: 'fresh',
 		};
 	} catch (error) {
+		console.error(error);
 		if (cacheOptions.onError === 'ignore') {
 			if (cachedData)
 				return {
@@ -112,17 +109,11 @@ export const getFromCacheOrFetch = async <T>(
 
 /** Clears cache for a given key. Prefer `markAsStale` to avoid clearing offline-available data. */
 export const clearCache = async (params: { cacheKey: CacheOptions['cacheKey'] }) => {
-	await del(getIDBCacheKey(params.cacheKey));
+	await idbDataCache.del(params.cacheKey);
 };
 
-/** TODO: be able to mark a cache segment as stale */
 export const markAsStale = async (params: { cacheKey: CacheOptions['cacheKey'] }) => {
-	await update(getIDBCacheKey(params.cacheKey), cachedData => {
-		if (!cachedData) return;
-
-		return {
-			...cachedData,
-			updatedAt: 0,
-		};
+	await idbDataCache.update(params.cacheKey, prev => {
+		return { ...prev, updatedAt: 0 };
 	});
 };
