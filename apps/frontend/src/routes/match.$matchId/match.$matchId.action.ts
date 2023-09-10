@@ -1,4 +1,4 @@
-import { CursorPaginationSchema, MatchError } from '@wrkplay/core';
+import { MatchError } from '@wrkplay/core';
 import { makeAction, redirect } from 'react-router-typesafe';
 import { match } from 'ts-pattern';
 import { z } from 'zod';
@@ -57,7 +57,7 @@ export const matchAction = makeAction(async ({ request, params }) => {
 				const response = await api.match.end.mutate({ matchId }, { signal: request.signal });
 				if (response.success) {
 					/** We mark the matches cache as stale. */
-					await markAsStale({ cacheKey: ['match.list', CursorPaginationSchema.parse({})] });
+					await markAsStale({ cacheKey: ['match', 'list'] });
 					return redirect('/');
 				}
 				return response;
