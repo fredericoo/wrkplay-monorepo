@@ -6,7 +6,7 @@ import { cn } from '../../../lib/utils';
 const badgeStyles = cva('truncate rounded-full px-3 py-0.5 text-center body-sm', {
 	variants: {
 		variant: {
-			default: '',
+			default: 'ring-1',
 			highContrast: '',
 		},
 		colorScheme: {
@@ -23,25 +23,25 @@ const badgeStyles = cva('truncate rounded-full px-3 py-0.5 text-center body-sm',
 			variant: 'default',
 			colorScheme: 'primary',
 			className:
-				'bg-background-subtle-primary text-copy-lowcontrast-primary shadow-surface-sm ring-1 ring-border-element-primary/5',
+				'bg-background-subtle-primary text-copy-lowcontrast-primary shadow-surface-sm ring-border-element-primary/30',
 		},
 		{
 			variant: 'default',
 			colorScheme: 'positive',
 			className:
-				'bg-background-subtle-positive text-copy-lowcontrast-positive shadow-surface-sm ring-1 ring-border-element-positive/30',
+				'bg-background-subtle-positive text-copy-lowcontrast-positive shadow-surface-sm ring-border-element-positive/30',
 		},
 		{
 			variant: 'default',
 			colorScheme: 'negative',
 			className:
-				'bg-background-subtle-negative text-copy-lowcontrast-negative shadow-surface-sm ring-1 ring-border-element-negative/5',
+				'bg-background-subtle-negative text-copy-lowcontrast-negative shadow-surface-sm ring-border-element-negative/30',
 		},
 		{
 			variant: 'default',
 			colorScheme: 'warning',
 			className:
-				'bg-background-subtle-warning text-copy-lowcontrast-warning shadow-surface-sm ring-1 ring-border-element-warning/5',
+				'bg-background-subtle-warning text-copy-lowcontrast-warning shadow-surface-sm ring-border-element-warning/30',
 		},
 		/** High contrast */
 		{

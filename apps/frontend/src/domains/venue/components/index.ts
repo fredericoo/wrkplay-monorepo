@@ -1,1 +1,1 @@
-export * from './VenueCard';
+export * from './venue-card';

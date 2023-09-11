@@ -46,7 +46,7 @@ const textStyles: TextStylesFn = theme => ({
 	heading: {
 		overline: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.bold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(16),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.widest'),
@@ -54,27 +54,24 @@ const textStyles: TextStylesFn = theme => ({
 		},
 		sm: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.bold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(14),
 			lineHeight: pxToRem(20),
 			letterSpacing: theme('letterSpacing.normal'),
-			textTransform: 'lowercase',
 		},
 		md: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.bold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(18),
 			lineHeight: pxToRem(24),
 			letterSpacing: theme('letterSpacing.normal'),
-			textTransform: 'lowercase',
 		},
 		lg: {
 			fontFamily: theme('fontFamily.body'),
-			fontWeight: theme('fontWeight.bold'),
+			fontWeight: theme('fontWeight.medium'),
 			fontSize: pxToRem(20),
 			lineHeight: pxToRem(28),
 			letterSpacing: theme('letterSpacing.normal'),
-			textTransform: 'lowercase',
 		},
 	},
 	body: {

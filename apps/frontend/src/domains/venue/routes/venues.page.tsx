@@ -11,8 +11,9 @@ export const VenuesPage = () => {
 	const { venues } = useLoaderData<typeof venuesLoader>();
 
 	return (
-		<div className="container flex flex-grow flex-col items-center py-8">
-			<div className="w-full max-w-md">
+		<div className="container flex flex-grow flex-col items-center gap-8 py-8">
+			<div className="flex w-full max-w-md flex-col gap-4">
+				<h1 className="flex-grow truncate display-2xs">Partner venues</h1>
 				<SWR
 					data={venues}
 					loadingElement={<div>loading</div>}

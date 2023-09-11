@@ -5,7 +5,7 @@ import { logoutAction } from '~/domains/auth/routes/logout.action';
 import { logoutLoader } from '~/domains/auth/routes/logout.loader';
 import { LogoutPage } from '~/domains/auth/routes/logout.page';
 
-export const authRoutes: RouteObject[] = [
+export const authPages: RouteObject[] = [
 	{
 		path: '/login',
 		Component: LoginPage,

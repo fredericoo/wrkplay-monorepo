@@ -3,13 +3,12 @@ import { Outlet } from 'react-router-dom';
 import { useLoaderData } from 'react-router-typesafe';
 
 import type { SafeAreaVar } from '~/domains/common/common.constants';
+import type { rootLoader } from '~/domains/common/routes/_root.loader';
 import { usePlatform } from '~/domains/native/native.hooks';
-
-import type { rootLoader } from './__root.loader';
 
 export type MainCSSVars = Record<SafeAreaVar, string> & CSSProperties;
 
-export const RootPage = () => {
+export const RootLayout = () => {
 	const { safeArea } = useLoaderData<typeof rootLoader>();
 	const platform = usePlatform();
 

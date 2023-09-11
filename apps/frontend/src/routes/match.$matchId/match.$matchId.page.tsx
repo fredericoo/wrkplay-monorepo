@@ -1,22 +1,22 @@
 import { Button } from '@wrkplay/ui';
 import { useEffect } from 'react';
 import { IoArrowBack, IoBanOutline, IoSkull } from 'react-icons/io5';
-import { Form, Link, useRouteLoaderData, useSubmit } from 'react-router-dom';
+import { Form, Link, useSubmit } from 'react-router-dom';
 import { useActionData, useLoaderData } from 'react-router-typesafe';
 import { match, P } from 'ts-pattern';
 
+import { useAuth } from '~/domains/auth/auth.hooks';
 import { groupBy } from '~/domains/common/common.utils';
 import { MessageView } from '~/domains/common/components/message-view';
 import { InlineError } from '~/domains/error/components/inline-error';
 import { MatchJoinSide } from '~/domains/match/components/match-join-side';
 import { TeamScore } from '~/domains/match/components/team-score';
 
-import type { rootLoader } from '../__root/__root.loader';
 import type { matchAction } from './match.$matchId.action';
 import type { matchLoader } from './match.$matchId.loader';
 
 export const MatchPage = () => {
-	const { user } = useRouteLoaderData('root') as ReturnType<typeof useLoaderData<typeof rootLoader>>;
+	const { user } = useAuth();
 	const { match: currentMatch } = useLoaderData<typeof matchLoader>();
 	const playersBySide = groupBy(currentMatch.players, x => x.side);
 	const me = currentMatch.players.find(x => x.user.id === user.id);

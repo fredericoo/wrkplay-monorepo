@@ -11,7 +11,6 @@ type Params = {
 	formatter?: Intl.RelativeTimeFormat;
 };
 
-/** From a date, calculates the relative time difference from now */
 export const getRelativeTimeDifference = ({ from = new Date(), to, formatter = defaultFormatter }: Params) => {
 	const then = to instanceof Date ? to : new Date(to);
 	const diff = then.getTime() - from.getTime();

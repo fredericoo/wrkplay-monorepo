@@ -1,7 +1,7 @@
 import { Badge } from '@wrkplay/ui';
 
 import { groupBy } from '~/domains/common/common.utils';
-import { getRelativeTimeDifference } from '~/domains/format/format.date';
+import { getRelativeTimeDifference } from '~/domains/common/common.formatting';
 import { UserAvatar } from '~/domains/user/components';
 
 import type { ListedMatch } from '../match.types';

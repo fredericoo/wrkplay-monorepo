@@ -18,7 +18,7 @@ const Container: React.FC<TabbarContainerProps> = ({ className, ...props }) => {
 };
 
 const itemVariant = cva(
-	'relative flex flex-1 select-none flex-col items-center gap-1 overflow-hidden py-3 transition-all duration-500 ease-expo-out focus:ring-0 focus-visible:bg-background-subtle-primary active:bg-background-subtle-primary active:ring-0',
+	'relative flex flex-1 select-none flex-col items-center gap-1 overflow-hidden py-3 transition-all duration-500 ease-expo-out focus:outline-none focus-visible:bg-background-strong-primary',
 	{
 		variants: {
 			isActive: {

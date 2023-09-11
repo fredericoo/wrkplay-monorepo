@@ -1,15 +1,24 @@
 import { Button, Tabbar } from '@wrkplay/ui';
-import { IoFlame, IoFlameOutline, IoMap, IoMapOutline } from 'react-icons/io5';
-import { Link, Outlet, useRouteLoaderData } from 'react-router-dom';
-import type { useLoaderData } from 'react-router-typesafe';
+import {
+	IoCog,
+	IoCogOutline,
+	IoFlame,
+	IoHome,
+	IoHomeOutline,
+	IoMap,
+	IoMapOutline,
+	IoPerson,
+	IoPersonOutline,
+} from 'react-icons/io5';
+import { Link, Outlet } from 'react-router-dom';
 
+import { useAuth } from '~/domains/auth/auth.hooks';
 import { useOptimisticLocation } from '~/domains/routing/routing.hooks';
-import type { rootLoader } from '~/routes/__root/__root.loader';
 
 import { Navbar } from './navbar';
 
 export const NavigationLayout = () => {
-	const { user } = useRouteLoaderData('root') as ReturnType<typeof useLoaderData<typeof rootLoader>>;
+	const { user } = useAuth();
 	const { pathname } = useOptimisticLocation();
 
 	return (
@@ -18,10 +27,20 @@ export const NavigationLayout = () => {
 			<div className="fixed bottom-0 z-50 flex w-full justify-center">
 				<Tabbar.Container className="flex-shrink-0">
 					<Link className="flex flex-1" to="/">
-						<Tabbar.Item isActive={pathname === '/'} icon={{ active: <IoFlame />, inactive: <IoFlameOutline /> }}>
-							Hot
+						<Tabbar.Item isActive={pathname === '/'} icon={{ active: <IoHome />, inactive: <IoHomeOutline /> }}>
+							Feed
 						</Tabbar.Item>
 					</Link>
+
+					<Link className="flex flex-1" to="/venues">
+						<Tabbar.Item
+							isActive={pathname.includes('/venues')}
+							icon={{ active: <IoMap />, inactive: <IoMapOutline /> }}
+						>
+							Venues
+						</Tabbar.Item>
+					</Link>
+
 					<div className="flex -translate-y-1/3 items-center">
 						<Button size="unsized" asChild>
 							<Link className="aspect-square flex-1 px-4 py-2" to="/join-match">
@@ -33,12 +52,21 @@ export const NavigationLayout = () => {
 						</Button>
 					</div>
 
-					<Link className="flex flex-1" to="/venues">
+					<Link className="flex flex-1" to="/me">
 						<Tabbar.Item
-							isActive={pathname.includes('/venues')}
-							icon={{ active: <IoMap />, inactive: <IoMapOutline /> }}
+							isActive={pathname.includes('/me')}
+							icon={{ active: <IoPerson />, inactive: <IoPersonOutline /> }}
 						>
-							Venues
+							Me
+						</Tabbar.Item>
+					</Link>
+
+					<Link className="flex flex-1" to="/settings">
+						<Tabbar.Item
+							isActive={pathname.includes('/settings')}
+							icon={{ active: <IoCog />, inactive: <IoCogOutline /> }}
+						>
+							Settings
 						</Tabbar.Item>
 					</Link>
 				</Tabbar.Container>

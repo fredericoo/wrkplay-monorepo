@@ -14,12 +14,12 @@ export const VenueCard = ({ venue }: VenueCardProps) => {
 			: venue.dict_pitch_plural || DEFAULT_PITCH_TERMS.plural;
 	return (
 		<Link to={`/venues/${venue.id}`} className="relative block rounded-6 bg-background-lowest">
-			<header className="relative overflow-hidden rounded-t-6 bg-background-subtle-neutral before:absolute before:inset-0 before:block before:bg-gradient-to-t before:opacity-80 before:content-[''] before:gradient-smooth-fade">
-				{venue.cover_url ? <img className="aspect-[4/3] w-full object-cover" src={venue.cover_url} alt="" /> : null}
+			<header className="relative isolate aspect-video overflow-hidden rounded-t-6 bg-background-strong-primary before:absolute before:inset-0 before:z-10 before:block before:bg-gradient-to-t before:opacity-50 before:content-[''] before:gradient-smooth-fade">
+				{venue.cover_url ? <img className="absolute inset-0 h-full object-cover" src={venue.cover_url} alt="" /> : null}
 			</header>
 
 			<div className="relative -mt-6 flex flex-col gap-2 rounded-6 bg-background-lowest p-6">
-				<h3 className="flex items-center gap-2 display-2xs">
+				<h3 className="flex items-center gap-2 heading-md">
 					{venue.name}{' '}
 					<Badge>
 						{venue._count.pitches} {pitchTerm}

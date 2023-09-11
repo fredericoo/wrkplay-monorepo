@@ -15,7 +15,7 @@ export const Navbar = ({ user }: NavbarProps) => {
 			<div className="container flex h-16 items-center">
 				<div className="flex-1" />
 				<div className="flex flex-1 items-center justify-center">
-					<Button intent="unstyled" className="-mx-1 p-1" asChild>
+					<Button intent="unstyled" className="-mx-1 px-2 py-1 pr-3" asChild>
 						<Link to="/">
 							<img className="h-8 w-8" src={Logo} alt="wrkplay" />
 							<span className="text-icon-highContrast-neutral font-bold tracking-tight">workplay</span>

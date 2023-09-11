@@ -21,19 +21,17 @@ export const userRouter = router({
 			select: { id: true, name: true, avatar_url: true },
 		});
 	}),
-	pendingMatches: authorizedProcedure
-		.input(z.intersection(CursorPaginationSchema.optional(), z.object({ userId: z.string() })))
-		.query(async ({ input }) => {
-			const pagination = getCursorPagination(input);
+	myPendingMatches: authorizedProcedure.input(CursorPaginationSchema.optional()).query(async ({ input, ctx }) => {
+		const pagination = getCursorPagination(input);
 
-			return await db.match.findMany({
-				...pagination,
-				where: { status: { in: ['NOT_STARTED', 'STARTED'] }, players: { some: { userId: input.userId } } },
-				select: {
-					id: true,
-					pitch: { select: { name: true, venue: { select: { name: true } } } },
-					createdAt: true,
-				},
-			});
-		}),
+		return await db.match.findMany({
+			...pagination,
+			where: { status: { in: ['NOT_STARTED', 'STARTED'] }, players: { some: { userId: ctx.session.user.userId } } },
+			select: {
+				id: true,
+				pitch: { select: { name: true, venue: { select: { name: true } } } },
+				createdAt: true,
+			},
+		});
+	}),
 });
